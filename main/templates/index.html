@@ -13,7 +13,7 @@
                                 <span id="start-button" hx-get="{% url 'start' %}"
                                       hx-target="#journey-overlay"
                                       class="text-black-500 hover:text-blue-800">
-                    <button onclick="sayWelcome();"><u>Share</u></button>
+                   <u>Share</u>
                 </span>
                     </button>
                     stories about joining a co-operative.
@@ -58,8 +58,6 @@
     </div>
 
     {% block scripts %}
-
-        {% vite_asset 'main/templates/ts/welcome.ts' %}
 
         <script>
 
