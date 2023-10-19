@@ -1,0 +1,8 @@
+{% load static %}
+<div class="">
+          {% if journey.image %}
+            <img src="{{ journey.image.url }}" class="max-w-sm">
+        {% else %}
+             <img src="{% static 'images/placeholder_1080p.png' %}" class="max-w-sm">
+        {% endif %}
+</div>

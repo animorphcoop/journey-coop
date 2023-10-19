@@ -1,0 +1,52 @@
+{% extends "overlay.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <h5 class="text-xl font-medium leading-normal text-gray-800">
+        Sign up
+    </h5>
+    <form hx-post="{% url 'signup' %}" hx-target="#nav" hx-swap="beforebegin">
+
+
+        {% csrf_token %}
+
+        {% for field in form %}
+
+            {% if field.name == "email" %}
+                <div class="py-4">
+                    {% include "partials/input_label.html" with for="username" label="Email" %}
+                    {% include "partials/input_text_single.html" with field=field id="username-input" name="username" type="text" %}
+                </div>
+
+            {% elif field.name == "password1" %}
+                <div class="mb-4">
+                    {% include "partials/input_label.html" with for="password1" label="Password" %}
+                    {% include "partials/input_text_single.html" with field=field id="password-input1" name="password1" type="password" placeholder="*******" %}
+                </div>
+            {% elif field.name == "password2" %}
+                <div class="mb-4">
+                    {% include "partials/input_label.html" with for="password2" label="Confirm password" %}
+                    {% include "partials/input_text_single.html" with field=field id="password-input2" name="password2" type="password" placeholder="*******" %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="border border-blue-500 rounded border-2 p-2">OK</button>
+
+                    {% if form.errors %}
+
+                    <div class="flex justify-center my-4">
+                        <div class="w-full p-4 bg-red-100 border border-red-200 rounded">
+                            <h2 class="text-lg font-semibold text-red-800 mb-2">Signup Failed</h2>
+                            <ul class="list-disc">
+                                {% for values in form.errors.values %}
+                                    <li class="text-sm text-red-600 my-2"> {{ values }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+    </form>
+
+{% endblock %}

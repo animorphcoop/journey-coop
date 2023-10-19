@@ -1,0 +1,16 @@
+*.pyc
+__pycache__
+venv
+.idea
+db.sqlite3
+static
+!main/static
+media
+uwsgi/
+
+theme/static_src/node_modules/
+theme/static/css/dist/*
+journey.ini
+
+journey/local.py
+node_modules

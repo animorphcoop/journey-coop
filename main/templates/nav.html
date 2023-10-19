@@ -1,0 +1,44 @@
+{% load static %}
+<!--Header-->
+
+<div id="nav" hx-swap-oob="true" class="sticky bg-white py-4 pl-8 grid grid-cols-2 place-items-center" {% if success %}
+     x-init="overlay = false; setTimeout(()=>{logged = true}, 250)" {% endif %}>
+
+
+    <div class="flex items-center">
+        <img src="{% static 'images/journey_ai_logo.jpg' %}" class="md:ml-0 w-24 h-auto max-w-full rounded-full">
+        <span class="text-black font-semibold text-lg ml-2 md:ml-8 lg:ml-16">
+        Journey.Coop
+    </span>
+    </div>
+
+    <div class="flex items-center">
+
+        {% if user.is_authenticated %}
+
+            <button class="bg-greyish rounded boarder border-black border-2 p-2">
+                    <span hx-post="{% url 'logout' %}"
+                          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                          hx-target="#journey-overlay"
+                          class="text-black-500 hover:text-blue-800 cursor-pointer"
+                          @click="logged = false"
+                    >
+                        Logout
+                    </span>
+            </button>
+        {% else %}
+            {% comment %}If we want to login after reset we want to clear the message{% endcomment %}
+            <button x-on:click="if (document.getElementById('feedback-message')){ document.getElementById('feedback-message').remove(); }"
+                    class="bg-greyish rounded boarder border-black border-2 p-2">
+                                                            <span hx-get="{% url 'login' %}"
+                                                                  hx-target="#journey-overlay"
+                                                                  class="text-black-500 hover:text-blue-800 cursor-pointer">
+                        Login
+                    </span>
+            </button>
+
+            </ul>
+
+        {% endif %}
+    </div>
+</div>

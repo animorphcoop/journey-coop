@@ -1,0 +1,56 @@
+{% extends "overlay.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <!-- This is a white spacer <div class="bg-white h-3"></div>-->
+
+    <h5 class="text-xl font-medium leading-normal">
+        <div class="text-2xl">{{ journey.title }}</div>
+    </h5>
+    {% include 'partials/journey_image.html' with journey=journey %}
+
+    <div class="my-4 bg-grey w-full">
+        <div class="py-8 ml-4">{{ journey.summary }}</div>
+    </div>
+
+    {% include 'partials/journey_audio.html' with journey=journey %}
+
+
+    <div class="my-4 w-full">
+
+
+        <div class="grid grid-cols-1">
+            {% if responses.count > 0 %}
+                <div class="ml-2 text-xl">Responses</div>
+            {% endif %}
+
+            <div id="responses">
+                {% include 'partials/journey_responses.html' with responses=responses %}
+
+            </div>
+        </div>
+
+    </div>
+
+
+    {% if user.is_authenticated %}
+        <!--Response form -->
+        <div class="w-full">
+            <form x-on:htmx:after-swap.window="document.getElementById('response-field').value = ''"
+                  hx-post="{% url 'journey_respond' journey.slug %}"
+                  hx-target="#responses"
+                  hx-swap="innerHTML"
+            >
+
+                {% csrf_token %}
+                {% render_field form.text id="response-field" class="w-full" %}
+
+                <div class="my-4">
+                    {% include "partials/button.html" with text="Respond" %}
+                </div>
+
+            </form>
+
+        </div>
+    {% endif %}
+{% endblock %}

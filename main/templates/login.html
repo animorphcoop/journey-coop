@@ -1,0 +1,59 @@
+{% extends "overlay.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="flex items-center justify-center bg-gray-900 block">
+        <div class="w-full max-w-sm p-8 bg-white ">
+            <h2 class="text-2xl text-center text-gray-900 mb-6">Login</h2>
+            <form hx-post="{% url 'login' %}" hx-target="#journey-overlay">
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                    {% if field.name == "username" %}
+                        <div class="py-4">
+                            {% include "partials/input_label.html" with for="username" label="Email" %}
+                            {% include "partials/input_text_single.html" with field=field id="username-input" name="username" type="text" %}
+                        </div>
+
+                    {% elif field.name == "password" %}
+                        <div class="mb-4">
+                            {% include "partials/input_label.html" with for="password" label="Password" %}
+                            {% include "partials/input_text_single.html" with field=field id="password-input" name="password" type="password" placeholder="*******" %}
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+                <button type="submit" class="border border-blue-500 rounded border-2 p-2">Log in</button>
+
+                {% if form.errors %}
+
+                    <div class="flex justify-center my-4">
+                        <div class="w-full p-4 bg-red-100 border border-red-200 rounded">
+                            <h2 class="text-lg font-semibold text-red-800 mb-2">Login Failed</h2>
+                            <ul class="list-disc">
+                                {% for values in form.errors.values %}
+                                    <li class="text-sm text-red-600 my-2"> {{ values }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            </form>
+
+        <div class="mt-4">Forgot your password? <span hx-get="{% url 'password_reset' %}"
+                                              hx-target="#journey-overlay"
+                                              class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
+            Reset it</span>.
+
+            <div class="mt-4">Don't have an account yet? <span hx-get="{% url 'signup' %}"
+                                              hx-target="#journey-overlay"
+                                              class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
+                        Sign up now</span>.</div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

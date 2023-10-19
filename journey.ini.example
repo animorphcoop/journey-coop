@@ -1,0 +1,23 @@
+[uwsgi]
+
+chdir = /home/journey/journey
+module = journey.wsgi:application
+home = /home/journey/journey/venv
+env = DJANGO_SETTINGS_MODULE=journey.settings
+env = SECRET_KEY=D3zEXdlJDwuejhmjVRAnpFZWYGJWxTifbXpYLK1LSU8K1T8s7J
+
+master = True
+processes = 5
+http-socket = :5000
+vacuum = True
+uid=1000
+gid=1000
+
+pidfile = /home/journey/journey/uwsgi/uwsgi_journey.pid
+harakiri = 20
+max-requests = 5000
+
+daemonize = /home/journey/journey/uwsgi/journey.log
+strict = True
+need-app = True
+enable-threads = True

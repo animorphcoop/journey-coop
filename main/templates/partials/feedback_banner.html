@@ -1,0 +1,23 @@
+{% comment %}HTMX message coming from render{% endcomment %}
+<div id="feedback-message"
+     x-init="overlay = false; enableBodyScroll(); document.getElementById('journey-modal').remove();"
+     class="w-full top-0 mb-4 bg-minty bg-opacity-50 px-4 py-2 rounded-md flex items-center justify-between">
+    <p class="text-blue-800">
+
+        {% block content %}
+
+        {% endblock %}
+
+
+    </p>
+    <button type="button"
+            x-on:click="document.getElementById('feedback-message').remove();"
+            class="ml-2 text-black focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" ; width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="feather feather-x">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+    </button>
+</div>
+
