@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.landing, name="landing"),
+    path('journeys/', views.journeys, name="journeys"),
+    path('journeys_count/', views.journeys_count, name="journeys_count"),
+
     path('signup/', views.UserCreate.as_view(), name="signup"),
     path('login/', views.UserLogin.as_view(), name="login"),
     path('nickname/<pk>/', views.UserNickname.as_view(), name="nickname"),

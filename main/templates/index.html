@@ -19,27 +19,22 @@
                     stories about joining a co-operative.
                 </p>
             </div>
-
-            {% for journey in journeys %}
-
-                <div class="border bg-grey border-2 grid justify-center items-center p-4 drop-shadow-lg text-gray-800 rounded border-2">
-
-                    <div x-on:click="stopBodyScroll();"
-                         hx-get="{% url 'journey_detail' journey.slug %}"
-                         hx-target="#journey-overlay"
-                         class="cursor-pointer">
-
-                        <div class="font-semibold text-2xl">{{ journey.title }}</div>
+            {% comment %}saveMyReflectUrl(`journeys/'){% endcomment %}
 
 
-                        {% include 'partials/journey_image.html' with journey=journey %}
+            <div
+                    hx-get="{% url 'journeys' %}"
+                    hx-trigger="load, every 3s [checkJourneyCount('journeys_count')]"
+                    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                    hx-target="#journey-list">
 
-                        <div class="font-normal text-md"> {{ journey.summary|truncatewords:5 }} </div>
+
+                <div id="journey-list"></div>
 
 
-                    </div>
-                </div>
-            {% endfor %}
+            </div>
+
+
         </div>
 
         <!--Empty placeholder of all overlays-->
@@ -55,6 +50,8 @@
       </span>
             </button>
         </div>
+
+        <div id="journeys_count" class="invisible"></div>
 
     </div>
 
@@ -91,6 +88,31 @@
             window.addEventListener('scroll', () => {
                 if (monitorScroll) document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
             });
+
+
+            initialJourneyCount = 0
+
+            function checkJourneyCount(myUrl) {
+                //console.log(document.getElementById('journeys_count'))
+                htmx.ajax('GET', myUrl, '#journeys_count')
+
+                if (document.getElementById('journeys_count') == null) return false
+
+                let newJourneyCountHtml = document.getElementById('journeys_count').innerHTML
+                let newJourneyCount = Number(newJourneyCountHtml)
+
+                if (newJourneyCount > initialJourneyCount) {
+                    initialJourneyCount = newJourneyCount
+                    //console.log('new stories')
+                    return true
+                } else {
+                    //console.log('no new story')
+                    return false
+                }
+
+
+            }
+
 
         </script>
 

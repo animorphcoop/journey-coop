@@ -37,6 +37,7 @@ class UserCreationForm(DjUserCreationForm):
         field_classes = {"email": UsernameField}
 
 
+# TODO: rename to nickname and country
 class SetNicknameForm(forms.ModelForm):
     class Meta:
         model = User

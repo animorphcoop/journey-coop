@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 from django.urls import reverse_lazy, reverse
-from .forms import UserCreationForm, AuthenticationForm, CreateJourneyForm, CreateResponseForm, UserResetForm, SetNewPasswordForm, SetNicknameForm
+from .forms import UserCreationForm, AuthenticationForm, CreateJourneyForm, CreateResponseForm, UserResetForm, \
+    SetNewPasswordForm, SetNicknameForm
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
 from django.utils.decorators import method_decorator
@@ -12,12 +14,24 @@ from django.utils.decorators import method_decorator
 from .models import Journey, Response, User
 from django.contrib import messages
 
+
 def landing(request):
+    return render(request, 'index.html')
+
+
+def journeys(request):
     journeys = Journey.objects.all()
     context = {
         'journeys': journeys
     }
-    return render(request, 'index.html', context)
+    return render(request, 'partials/journeys.html', context)
+
+
+def journeys_count(request):
+    journeys = Journey.objects.all()
+    print(journeys.count())
+
+    return HttpResponse(journeys.count())
 
 
 class UserCreate(CreateView):
@@ -86,7 +100,6 @@ class UserNickname(UpdateView):
         return render(self.request, "partials/overlay_end.html")
 
 
-
 # source template in contrib/admin/templates/registration
 class UserResetConfirm(PasswordResetConfirmView):
     form_class = SetNewPasswordForm
@@ -97,7 +110,8 @@ class UserResetConfirm(PasswordResetConfirmView):
         del self.request.session["_password_reset_token"]
         if self.post_reset_login:
             auth_login(self.request, user, self.post_reset_login_backend)
-        messages.success(self.request, 'You have successfully reset your password, feel most welcome to log in using it now!')
+        messages.success(self.request,
+                         'You have successfully reset your password, feel most welcome to log in using it now!')
         return redirect('landing')
 
 
