@@ -6,7 +6,9 @@
 
     <h5 class="text-xl font-medium leading-normal">
         <div class="text-2xl">{{ journey.title }}</div>
-    <span>by {{ journey.author }}</span>
+    <span class="inline-block">by {{ journey.author }} from  <img src="{{ journey.author.country.flag  }}" class="inline max-w-sm"></span>
+
+
     </h5>
     {% include 'partials/journey_image.html' with journey=journey %}
 

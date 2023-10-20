@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.hashers import make_password
 from django.core.validators import FileExtensionValidator
+from django_countries.fields import CountryField
 
 
 class UserManager(BaseUserManager):
@@ -47,6 +48,7 @@ class User(AbstractUser):
         help_text=_("Will be shown alongside entries"),
         null=True,
     )
+    country = CountryField(null=True,)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
