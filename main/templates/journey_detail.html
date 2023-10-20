@@ -40,7 +40,7 @@
     {% if user.is_authenticated %}
         <!--Response form -->
         <div class="w-full">
-            <form x-on:htmx:after-swap.window="setTimeout(()=>{if (document.getElementById('response-field') != null) document.getElementById('response-field').value = ''},500)"
+            <form x-on:htmx:after-swap.window="console.log('clear response field after post')"
                   hx-post="{% url 'journey_respond' journey.slug %}"
                   hx-target="#responses"
                   hx-swap="innerHTML"
