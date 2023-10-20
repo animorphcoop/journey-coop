@@ -68,7 +68,7 @@ class Journey(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=100)
     title = models.CharField(max_length=80)
-    summary = models.TextField(max_length=240)
+    summary = models.TextField(max_length=500)
     image = models.ImageField(upload_to='images/', blank=True,
                               validators=[FileExtensionValidator(ALLOWED_IMAGE_TYPES)],
                               )

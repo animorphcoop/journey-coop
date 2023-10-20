@@ -4,7 +4,8 @@
 {% block content %}
 
     <div class="mb-8">
-        <h4 class="text-xl font-medium leading-normal text-gray-800 ">Share your journey!</h4>
+        <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">Share your journey!</h4>
+    <p class="font-light">Please share a short (max 500 characters) summary of how you found yourself in a co-operative. Please also share an image!</p>
     </div>
 
     <div class="editor mx-auto w-full flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
@@ -20,6 +21,8 @@
 
 
             {% include "partials/input_text_single.html" with field=form.title id=title name=title type=text placeholder="Name your journey..." %}
+<div class="my-4"></div>
+            {% include "partials/input_label.html" with for=summary label="Summary" %}
 
             {% include "partials/input_text_area.html" with field=form.summary id=summary name=summary type=textarea callback="updateCharacterCount($event)" placeholder="Summarise your story..." %}
 
@@ -50,12 +53,12 @@
                         <path d="M8 17V5l12-2v12"/>
                     </svg>
                 </button>
-                <div id="summary-counter" class="count ml-auto text-gray-400 text-xs font-semibold">0/240</div>
+                <div id="summary-counter" class="count ml-auto text-gray-400 text-xs font-semibold">0/500</div>
             </div>
             <!-- submit button -->
             <div class="buttons flex">
                 <button type="submit"
-                        class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
+                        class="border border-violety rounded border-2 cursor-pointer text-gray-800 px-4 ml-2 ">
                     Publish
                 </button>
             </div>
@@ -104,7 +107,7 @@
         }
 
         function updateCharacterCount(event) {
-            document.getElementById("summary-counter").innerText = `${event.target.value.length}/240`
+            document.getElementById("summary-counter").innerText = `${event.target.value.length}/500`
 
         }
     </script>

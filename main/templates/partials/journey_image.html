@@ -1,8 +1,8 @@
 {% load static %}
-<div class="">
+<div class="max-w-full">
           {% if journey.image %}
-            <img src="{{ journey.image.url }}" class="max-w-sm">
+            <img src="{{ journey.image.url }}" class="">
         {% else %}
-             <img src="{% static 'images/placeholder_1080p.png' %}" class="max-w-full">
+             <img src="{% static 'images/placeholder_1080p.png' %}" class="">
         {% endif %}
 </div>

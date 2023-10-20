@@ -63,6 +63,9 @@ export default {
                 },
                 minty: {
                     DEFAULT: '#b7f8bb'
+                },
+                violety: {
+                    DEFAULT: '#bea4f5'
                 }
             }
 

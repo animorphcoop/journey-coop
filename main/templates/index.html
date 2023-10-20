@@ -4,11 +4,11 @@
 
 {% block content %}
 
-    <div class="flex flex-col min-h-screen" x-init="console.log('active')">
+    <div class="flex flex-col min-h-screen w-full md:max-w-1/3 items-center" x-init="console.log('active')">
 
         <div :class="{ 'hidden': overlay == true}">
-            <div class="bg-limey mx-2 my-4 px-8 py-4">
-                <p class="text-grey-800 text-3xl font-inter font-normal">
+            <div class="bg-limey my-4 px-4 md:px-8 py-4 mx:py-8">
+                <p class="text-grey-800 text-2xl md:text-3xl font-inter font-normal">
                     <button @click="next='start'">
                                 <span id="start-button" hx-get="{% url 'start' %}"
                                       hx-target="#journey-overlay"
@@ -16,7 +16,7 @@
                    <u>Share</u>
                 </span>
                     </button>
-                    stories about joining a co-operative.
+                    & discuss stories about joining co&#8209;operatives.
                 </p>
             </div>
             {% comment %}saveMyReflectUrl(`journeys/'){% endcomment %}
@@ -51,7 +51,7 @@
             </button>
         </div>
 
-        <div id="journeys_count" class="invisible"></div>
+        <div id="journeys_count" class="invisible absolute z-10"></div>
 
     </div>
 ,
