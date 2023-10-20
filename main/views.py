@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import reverse_lazy, reverse
-from .forms import UserCreationForm, AuthenticationForm, CreateJourneyForm, CreateResponseForm, UserResetForm, SetNewPasswordForm
+from .forms import UserCreationForm, AuthenticationForm, CreateJourneyForm, CreateResponseForm, UserResetForm, SetNewPasswordForm, SetNicknameForm
 from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
 from django.utils.decorators import method_decorator
@@ -74,7 +74,20 @@ class UserReset(PasswordResetView):
         return render(self.request, "partials/password_reset_done.html", context)
 
 
-# original template in contrib/admin/templates/registration
+class UserNickname(UpdateView):
+    model = User
+    form_class = SetNicknameForm
+    template_name = "nickname.html"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        self.object.save()
+        return render(self.request, "partials/overlay_end.html")
+
+
+
+# source template in contrib/admin/templates/registration
 class UserResetConfirm(PasswordResetConfirmView):
     form_class = SetNewPasswordForm
     template_name = "password_reset_confirm.html"
@@ -93,7 +106,6 @@ class CreateJourney(CreateView):
     template_name = 'journey_start.html'
 
     def dispatch(self, request, *args, **kwargs):
-        print('dispatching')
         if not request.user.is_authenticated:
             return UserLogin.as_view()(request, *args, **kwargs)
 

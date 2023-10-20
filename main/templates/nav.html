@@ -16,7 +16,10 @@
 
         {% if user.is_authenticated %}
 
-            <button class="bg-greyish rounded boarder border-black border-2 p-2">
+            {% if user.nickname %}
+
+                {% comment %}TODO: Currently logout does not know about new nickname created{% endcomment %}
+                <button class="bg-greyish rounded boarder border-black border-2 p-2">
                     <span hx-post="{% url 'logout' %}"
                           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                           hx-target="#journey-overlay"
@@ -25,7 +28,16 @@
                     >
                         Logout
                     </span>
-            </button>
+                </button>
+            {% else %}
+                 <div hx-get="{% url 'nickname' user.pk %}"
+                      hx-trigger="load"
+                      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                      hx-target="#journey-overlay">
+
+                 </div>
+
+            {% endif %}
         {% else %}
             {% comment %}If we want to login after reset we want to clear the message{% endcomment %}
             <button x-on:click="if (document.getElementById('feedback-message')){ document.getElementById('feedback-message').remove(); }"
@@ -37,7 +49,7 @@
                     </span>
             </button>
 
-            </ul>
+
 
         {% endif %}
     </div>

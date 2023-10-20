@@ -13,7 +13,7 @@ import unicodedata
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import capfirst
 from django.core.exceptions import ValidationError
-from main.models import Journey, Response
+from main.models import Journey, Response, User
 
 import os
 from django.template import loader
@@ -39,10 +39,32 @@ class UserCreationForm(DjUserCreationForm):
         field_classes = {"email": UsernameField}
 
 
+class SetNicknameForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("nickname",)
+
+    '''
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        print(cleaned_data)
+        return cleaned_data
+
+    class Meta:
+        model = get_user_model()
+        fields = ("nickname",)
+
+    def post(self, request):
+        current_user = request.User
+        print(current_user)
+'''
+
 class AuthenticationForm(DjAuthenticationForm):
     class Meta:
         model = get_user_model()
         fields = ("email", "password",)
+
+
 
 class UserResetForm(DjPasswordResetForm):
 
@@ -103,26 +125,6 @@ class CreateJourneyForm(forms.ModelForm):
         model = Journey
         fields = ("title", "summary", "image", "audio",)
 
-    '''
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        file = cleaned_data.get("audio")
-        #print('here')
-
-        #breakpoint()
-
-        if file is not None:
-            try:
-                extension = os.path.splitext(file.name)[1][1:].lower()
-                if extension in self.ALLOWED_AUDIO_TYPES:
-                    return cleaned_data
-                else:
-                    raise forms.ValidationError('File types is not allowed')
-            except Exception as e:
-                raise forms.ValidationError('Cannot identify file type')
-
-        return cleaned_data
-        '''
 
 
 class CreateResponseForm(forms.ModelForm):

@@ -1,0 +1,34 @@
+{% extends "overlay.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+    {% comment %} removing default overlay behaviour with close buttons since this is a standalone page {% endcomment %}
+
+    <div>
+
+        <header class="text-2xl">Please enter your nickname to display alongside your activity.</header>
+
+
+        {% comment %}TODO: swap with nav and injecting overlay_end{% endcomment %}
+        <form hx-post="{% url 'nickname' user.pk %}"
+              hx-target="#journey-modal"
+              hx-swap="afterend">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == "nickname" %}
+                    <div class="py-4">
+                        {% include "partials/input_label.html" with for="nickname-input" label="Nickname" %}
+                        {% include "partials/input_text_single.html" with field=field id="nickname-input" name="nickname" type="text" %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="my-4">
+                {% include "partials/button.html" with text="Set Nickname" %}
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}

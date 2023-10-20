@@ -41,10 +41,22 @@ class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
+    nickname = models.CharField(
+        verbose_name=_("Nickname"),
+        max_length=30,
+        help_text=_("Will be shown alongside entries"),
+        null=True,
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = UserManager()
+
+    def __str__(self) -> str:
+        if self.nickname:
+            return self.nickname
+        else:
+            return self.email
 
 
 class Journey(models.Model):

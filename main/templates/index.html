@@ -34,13 +34,14 @@
 
                         {% include 'partials/journey_image.html' with journey=journey %}
 
-                        <div class="font-normal text-md">                        {{ journey.summary|truncatewords:5 }}</div>
+                        <div class="font-normal text-md"> {{ journey.summary|truncatewords:5 }} </div>
 
 
                     </div>
                 </div>
             {% endfor %}
         </div>
+
         <!--Empty placeholder of all overlays-->
         <div id="journey-overlay"></div>
 
