@@ -22,7 +22,7 @@ def landing(request):
 def journeys(request):
     journeys = Journey.objects.all()
     context = {
-        'journeys': journeys
+        'journeys': journeys.order_by('-created_on')
     }
     return render(request, 'partials/journeys.html', context)
 
