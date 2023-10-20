@@ -139,6 +139,11 @@ STATICFILES_DIRS = [
 ]
 
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -166,6 +171,8 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # the rest imported from local
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+DJANGO_VITE_DEV_MODE = False
 
 
 try:

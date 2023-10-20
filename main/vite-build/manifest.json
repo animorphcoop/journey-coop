@@ -1,6 +1,6 @@
 {
   "main/templates/ts/base.css": {
-    "file": "base-683c4ab3.css",
+    "file": "base-51c571d6.css",
     "src": "main/templates/ts/base.css"
   },
   "main/templates/ts/base.ts": {
@@ -8,9 +8,9 @@
       "Inter.var-85f08b5f.woff2"
     ],
     "css": [
-      "base-683c4ab3.css"
+      "base-51c571d6.css"
     ],
-    "file": "main/templates/ts/base-6bac508a.js",
+    "file": "main/templates/ts/base-d2b4030b.js",
     "imports": [
       "main/templates/ts/utils.ts"
     ],
@@ -21,14 +21,6 @@
     "file": "main/templates/ts/utils-77554bf5.js",
     "isEntry": true,
     "src": "main/templates/ts/utils.ts"
-  },
-  "main/templates/ts/welcome.ts": {
-    "file": "main/templates/ts/welcome-fae9615d.js",
-    "imports": [
-      "main/templates/ts/utils.ts"
-    ],
-    "isEntry": true,
-    "src": "main/templates/ts/welcome.ts"
   },
   "static/fonts/Inter.var.woff2": {
     "file": "Inter.var-85f08b5f.woff2",

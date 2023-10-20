@@ -54,14 +54,19 @@ python manage.py createsuperuser
 npm install
 ```
 
-For running it in development (as described in vite.config.js)
+~~For running it in development (as described in vite.config.js)~~
 
+Give [the issue with reload loop](https://github.com/animorphcoop/journey-coop/issues/7), for now replace the below with entr
 ```bash
 npm run dev
 ```
 
+```bash
+find main/templates | entr -s 'npm run build'
+```
 
-4. Now run SSR app (continue Vite process in parallel)
+
+4. Now run SSR app (continue Vite/entr process in parallel)
 
 ```bash
 python manage.py runserver

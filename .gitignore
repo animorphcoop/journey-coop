@@ -14,3 +14,4 @@ journey.ini
 
 journey/local.py
 node_modules
+main/vite-build
