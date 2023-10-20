@@ -2,9 +2,7 @@ from django.contrib.auth.forms import UserCreationForm as DjUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm as DjAuthenticationForm
 from django.contrib.auth.forms import PasswordResetForm as DjPasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm as DjSetPasswordForm
-
-
-
+from django_countries.widgets import CountrySelectWidget
 
 from django.contrib.auth import get_user_model, authenticate
 from django import forms
@@ -42,22 +40,9 @@ class UserCreationForm(DjUserCreationForm):
 class SetNicknameForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("nickname",)
+        fields = ("nickname", "country")
+        widgets = {"country": CountrySelectWidget()}
 
-    '''
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        print(cleaned_data)
-        return cleaned_data
-
-    class Meta:
-        model = get_user_model()
-        fields = ("nickname",)
-
-    def post(self, request):
-        current_user = request.User
-        print(current_user)
-'''
 
 class AuthenticationForm(DjAuthenticationForm):
     class Meta:
