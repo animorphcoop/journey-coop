@@ -1,6 +1,6 @@
 {% for journey in journeys %}
 
-    <div class="border bg-grey border-2 grid justify-center items-center p-4 drop-shadow-lg text-gray-800 rounded border-2">
+    <div class="border bg-grey border-1 grid justify-center items-center py-4 drop-shadow-lg text-gray-800 rounded border-limey">
 
         <div x-on:click="stopBodyScroll();"
              hx-get="{% url 'journey_detail' journey.slug %}"

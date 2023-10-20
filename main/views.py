@@ -29,8 +29,6 @@ def journeys(request):
 
 def journeys_count(request):
     journeys = Journey.objects.all()
-    print(journeys.count())
-
     return HttpResponse(journeys.count())
 
 

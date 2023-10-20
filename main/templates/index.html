@@ -8,7 +8,7 @@
 
         <div :class="{ 'hidden': overlay == true}">
             <div class="bg-limey mx-2 my-4 px-8 py-4">
-                <p class="text-black text-3xl font-inter font-normal">
+                <p class="text-grey-800 text-3xl font-inter font-normal">
                     <button @click="next='start'">
                                 <span id="start-button" hx-get="{% url 'start' %}"
                                       hx-target="#journey-overlay"
@@ -54,7 +54,7 @@
         <div id="journeys_count" class="invisible"></div>
 
     </div>
-
+,
     {% block scripts %}
 
         <script>
