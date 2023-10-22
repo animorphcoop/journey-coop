@@ -56,61 +56,25 @@ npm install
 
 ~~For running it in development (as described in vite.config.js)~~
 
-Give [the issue with reload loop](https://github.com/animorphcoop/journey-coop/issues/7), for now replace the below with entr
-```bash
-npm run dev
-```
+Give [the issue with reload loop](https://github.com/animorphcoop/journey-coop/issues/7), for now replace the standard development command `npm run dev` with entr:
 
 ```bash
 find main/templates | entr -s 'npm run build'
 ```
 
 
-4. Now run SSR app (continue Vite/entr process in parallel)
+4. Now run SSR app (continue Vite/entr process in parallel if needed but if it's building might not need to run)
 
 ```bash
 python manage.py runserver
 ```
-(first time start might be slow due to syncing Django with Vite and due to `journey_vite_prevent_unstyled_flash` template tag)
 
 ## Deployment
-with uWSGI and Caddy on Debian (needs more complete description)
-
-
-### Setup user
-
-- ssh into the server
- 
-```bash
-adduser las
-```
-```bash
-usermod -aG sudo las
-```
-```bash
-sudo apt install ufw
-```
-```bash
-sudo ufw allow ssh
-```
-```bash
-sudo ufw allow http
-```
-```bash
-sudo ufw allow https
-```
-```bash
-nano /etc/ssh/sshd_config
-```
-`PermitRootLogin yes` so it reads `PermitRootLogin no`
-
+with uWSGI and Caddy on Debian 
 
 ### Project setup on the server
 - Setup keys & clone repo
-- Deploy Key: https://docs.gitlab.com/ee/user/project/deploy_keys/ (create without password on user 'journey')
-- Add to Github via Settings->Repository->Deploy keys (read only is fine)
-- Follow installation steps (from the start + add local.py with sensitive creds)
-- Apart from getting Django side ready, also bundle Vite assets as static
+- Follow installation steps above (from the start + add local.py with sensitive creds)
 ```bash
 npm run build
 ```
@@ -120,9 +84,9 @@ python manage.py collectstatic
 ```
 
 ### uwsgi
-- Django guidelines with some modifications: https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/uwsgi/
-- To run it need to first enable venv and allowed hosts
+journey.ini is creating a pid and log in uwsgi directory
 
+To start uwsgi:
 ```bash
 uwsgi --ini journey.ini
 ```
@@ -133,9 +97,14 @@ uwsgi --reload uwsgi/uwsgi_journey.pid
 ```
 
 ### Caddy
-- https://caddyserver.com/docs/install#debian-ubuntu-raspbian
-- (refer to Caddyfile)
+- Please refer to Caddyfile, it has been moved to /etc/caddy/)
 
 ```bash
 caddy start
 ```
+
+- if you change the config don't forget to reload
+```bash
+caddy reload --config /etc/caddy/Caddyfile
+```
+

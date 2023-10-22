@@ -8,9 +8,8 @@ static
 media
 uwsgi/
 
-theme/static_src/node_modules/
-theme/static/css/dist/*
 journey.ini
+Caddyfile
 
 journey/local.py
 node_modules
