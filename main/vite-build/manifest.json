@@ -1,6 +1,6 @@
 {
   "main/templates/ts/base.css": {
-    "file": "base-0829e9c0.css",
+    "file": "base-9cf2d2b6.css",
     "src": "main/templates/ts/base.css"
   },
   "main/templates/ts/base.ts": {
@@ -8,9 +8,9 @@
       "Inter.var-85f08b5f.woff2"
     ],
     "css": [
-      "base-0829e9c0.css"
+      "base-9cf2d2b6.css"
     ],
-    "file": "main/templates/ts/base-af35337a.js",
+    "file": "main/templates/ts/base-78c0165e.js",
     "imports": [
       "main/templates/ts/utils.ts"
     ],
