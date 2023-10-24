@@ -1,10 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from .factories import JourneyFactory, UserFactory
 from main.models import User, Journey, Response
 from django.utils.text import slugify
 
 
+@override_settings(
+    EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
+)
 class MainTest(TestCase):
 
     def setUp(self):
@@ -79,6 +82,21 @@ class MainTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Journey.coop')
 
+    def test_post_login_error(self):
+        self.client.logout()
+        user = UserFactory(email='test@email.uk')
+        user.set_password('1234')
+        user.save()
+        response = self.client.post(
+            reverse('login'),
+            {
+                'username': user.email,
+                'password': '12345'
+            }
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Login Failed')
+
     def test_get_nickname(self):
         response = self.client.get(
             reverse('nickname', kwargs={'pk': self.user.pk})
@@ -95,15 +113,11 @@ class MainTest(TestCase):
             reverse('nickname', kwargs={'pk': self.user.pk}),
             {
                 'nickname': 'donbalon',
-                'country': 'cl'
+                'country': 'CL'
             }
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'enableBodyScroll()')
-
-    #def test_get_logout(self):
-    #    response = self.client.get(reverse('logout'))
-    #    self.assertEqual(response.status_code, 401)
 
     def test_post_logout(self):
         response = self.client.post(reverse('logout'))
@@ -123,13 +137,13 @@ class MainTest(TestCase):
         response = self.client.post(
             reverse('password_reset'),
             {
-                'email': 'test@test.uk'
+                'email': self.user.email
             }
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
-            'If the address test@test.uk exists in our datab'
+            f'If the address {self.user.email} exists in our datab'
             'ase, an email has been sent with instructions t'
             'o reset your password.'
         )
@@ -199,4 +213,4 @@ class MainTest(TestCase):
             'This is a test response to a journey. Regards!'
         )
         self.assertEqual(respond.journey, journey)
-        # self.assertEqual(respond.author, )
+        self.assertEqual(respond.author, self.user)
