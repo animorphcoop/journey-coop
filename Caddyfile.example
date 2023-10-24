@@ -1,0 +1,12 @@
+journey.coop:443 {
+        route {
+                file_server /static/* {
+                        root /home/journey/journey-coop
+                }
+                file_server /media/* {
+                        root /home/journey/journey-coop
+                }
+                reverse_proxy 127.0.0.1:5000
+        }
+        tls sz@animorph.coop
+}

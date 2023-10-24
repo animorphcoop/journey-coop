@@ -17,21 +17,15 @@ import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-#print(BASE_DIR)
+print(BASE_DIR)
+
 MAIN_DIR = os.path.join(BASE_DIR, "main")
-#print(MAIN_DIR)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xe*tvqiv747y*^w$2=r2l3)_^!phd&ylp%yq)bm1hre1=g2*=y'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['staging.journey.coop', '127.0.0.1']
 
 # Application definition
 
@@ -175,7 +169,11 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 DJANGO_VITE_DEV_MODE = False
 
 
+# Load .local for production
 try:
     from .local import *
 except ImportError:
-    pass
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    SECRET_KEY = 'django-insecure-xe*tvqiv747y*^w$2=r2l3)_^!phd&ylp%yq)bm1hre1=g2*=y'
+    ALLOWED_HOSTS = ['staging.journey.coop', '127.0.0.1']

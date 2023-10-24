@@ -24,7 +24,7 @@
 
             <div
                     hx-get="{% url 'journeys' %}"
-                    hx-trigger="load, every 3s [checkJourneyCount('journeys_count')]"
+                    hx-trigger="load, every 5s [checkJourneyCount('journeys_count')]"
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                     hx-target="#journey-list">
 
@@ -54,23 +54,37 @@
         <div id="journeys_count" class="invisible absolute z-10"></div>
 
     </div>
-,
     {% block scripts %}
 
         <script>
 
-            /*scrolling switch and position logic for handling overlay behaviour*/
+            /* scrolling switch and position logic for handling overlay behaviour*/
             let scrollToPos = 0;
             let monitorScroll = true
             const stopBodyScroll = () => {
                 scrollToPos = document.documentElement.style.getPropertyValue('--scroll-y');
                 const body = document.body;
                 body.style.position = 'fixed';
+                /* Centering body position for wider windows
+                until there's styling for larger screens */
+                if (window.innerWidth > 960) {
+                    body.style.left = '50%';
+                    body.style.transform = 'translateX(-50%)';
+                }
+
                 monitorScroll = false;
             };
             const enableBodyScroll = () => {
                 const body = document.body;
                 body.style.position = '';
+
+                /* Resetting the properties for wider windows
+                until there's styling for larger screens */
+                if (window.innerWidth > 960) {
+                    body.style.left = '';
+                    body.style.transform = '';
+                }
+
 
                 setTimeout(
                     function () {

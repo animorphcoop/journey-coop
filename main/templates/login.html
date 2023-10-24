@@ -42,18 +42,19 @@
                 {% endif %}
             </form>
 
-        <div class="mt-4">Forgot your password? <span hx-get="{% url 'password_reset' %}"
-                                              hx-target="#journey-overlay"
-                                              class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
+            <div class="mt-4">Forgot your password? <span hx-get="{% url 'password_reset' %}"
+                                                          hx-target="#journey-overlay"
+                                                          class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
             Reset it</span>.
 
-            <div class="mt-4">Don't have an account yet? <span hx-get="{% url 'signup' %}"
-                                              hx-target="#journey-overlay"
-                                              class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
-                        Sign up now</span>.</div>
+                <div class="mt-4">Don't have an account yet? <span hx-get="{% url 'signup' %}"
+                                                                   hx-target="#journey-overlay"
+                                                                   class="text-gray-800 hover:text-blue-800 font-bold cursor-pointer">
+                        Sign up now</span>.
+                </div>
+            </div>
         </div>
+
     </div>
-
-
 
 {% endblock %}

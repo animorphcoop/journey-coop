@@ -8,7 +8,6 @@
     <title>Journey to Co-op</title>
 
 
-
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -21,26 +20,27 @@
 
 
 </head>
-<body x-data="{overlay: false }" class="bg-greyish w-full">
+<body x-data="{overlay: false }" class="bg-greyish">
 
-<!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-<div id="app" class="flex flex-col" x-data="{ next: '', logged: false}">
-    {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
-    {% if messages %}
-        {% include "partials/feedback_banner_message.html" with messages=messages %}
-    {% endif %}
+<div class="max-w-3xl m-auto">
+    <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
+    <div id="app" class="flex flex-col" x-data="{ next: '', logged: false}">
+        {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
+        {% if messages %}
+            {% include "partials/feedback_banner_message.html" with messages=messages %}
+        {% endif %}
 
-    <div :class="{ 'hidden': overlay == true}"
-         x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
-        {% include 'nav.html' %}
+        <div :class="{ 'hidden': overlay == true}"
+             x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
+            {% include 'nav.html' %}
+        </div>
+
+
+        {% block content %}
+
+        {% endblock %}
     </div>
-
-
-    {% block content %}
-
-    {% endblock %}
 </div>
-
 </body>
 <style>
 
