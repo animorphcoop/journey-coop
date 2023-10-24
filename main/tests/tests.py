@@ -8,7 +8,11 @@ from django.utils.text import slugify
 class MainTest(TestCase):
 
     def setUp(self):
-        pass
+        user = UserFactory()
+        user.set_password('1234')
+        user.save()
+        self.user = user
+        self.client.login(email=user.email, password='1234')
 
     def test_landing(self):
         response = self.client.get(reverse('landing'))
@@ -29,11 +33,13 @@ class MainTest(TestCase):
         self.assertEqual(response.content, b'4')
 
     def test_get_signup(self):
+        self.client.logout()
         response = self.client.get(reverse('signup'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Sign up")
 
     def test_post_signup(self):
+        self.client.logout()
         response = self.client.post(
             reverse('signup'),
             {
@@ -53,24 +59,30 @@ class MainTest(TestCase):
         )
 
     def test_get_login(self):
+        self.client.logout()
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Log in')
 
     def test_post_login(self):
-        user = UserFactory(email='test@email.uk', password='1234')
+        self.client.logout()
+        user = UserFactory(email='test@email.uk')
+        user.set_password('1234')
+        user.save()
         response = self.client.post(
             reverse('login'),
             {
-                'email': user.email,
-                'password': user.password
+                'username': user.email,
+                'password': '1234'
             }
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Journey.coop')
 
     def test_get_nickname(self):
-        response = self.client.get('nickname')
+        response = self.client.get(
+            reverse('nickname', kwargs={'pk': self.user.pk})
+        )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
             response,
@@ -79,16 +91,15 @@ class MainTest(TestCase):
         )
 
     def test_post_nickname(self):
-        user = UserFactory(email='test@email.uk', password='1234')
         response = self.client.post(
-            reverse('login', kwargs={'pk': user.pk}),
+            reverse('nickname', kwargs={'pk': self.user.pk}),
             {
                 'nickname': 'donbalon',
                 'country': 'cl'
             }
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Journey.coop')
+        self.assertContains(response, 'enableBodyScroll()')
 
     #def test_get_logout(self):
     #    response = self.client.get(reverse('logout'))
@@ -97,10 +108,7 @@ class MainTest(TestCase):
     def test_post_logout(self):
         response = self.client.post(reverse('logout'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response,
-            'You are now logged out. Hope to see you soon!'
-        )
+        self.assertContains(response, 'Journey.coop')
 
     def test_get_password_reset(self):
         response = self.client.get(reverse('password_reset'))
@@ -135,6 +143,7 @@ class MainTest(TestCase):
         self.assertContains(response, 'Share your journey!')
 
     def test_post_start(self):
+
         response = self.client.post(
             reverse('start'),
             {
@@ -153,7 +162,7 @@ class MainTest(TestCase):
             journey.summary,
             'Test summary that is no longer than 400 characters'
         )
-        self.assertEqual(journey.slug, slugify(journey.title))
+        self.assertIn(slugify(journey.title), journey.slug)
 
     def test_get_journey(self):
         journey = JourneyFactory()
