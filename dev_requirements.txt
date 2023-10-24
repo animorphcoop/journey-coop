@@ -1,0 +1,2 @@
+django-factory-boy==1.0.0
+coverage==7.3.2

@@ -14,3 +14,5 @@ Caddyfile
 journey/local.py
 node_modules
 main/vite-build
+
+.coverage
