@@ -1,2 +1,6 @@
+-r requirements.txt
 django-factory-boy==1.0.0
 coverage==7.3.2
+django_browser_reload==1.11.0
+django-debug-toolbar==4.2.0
+

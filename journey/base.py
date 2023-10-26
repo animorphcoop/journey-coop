@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_htmx',
-    'django_browser_reload',
     'widget_tweaks',
 
 
@@ -81,15 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'journey.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -166,14 +156,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # the rest imported from local
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
+# run dev to be fixed and then split between prod and dev
 DJANGO_VITE_DEV_MODE = False
 
 
-# Load .local for production
-try:
-    from .local import *
-except ImportError:
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
-    SECRET_KEY = 'django-insecure-xe*tvqiv747y*^w$2=r2l3)_^!phd&ylp%yq)bm1hre1=g2*=y'
-    ALLOWED_HOSTS = ['staging.journey.coop', '127.0.0.1']
