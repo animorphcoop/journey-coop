@@ -1,20 +1,24 @@
-{% for journey in journeys %}
+<div>
+  {% for journey in journeys %}
 
-    <div class="border bg-grey border-1 grid justify-center items-center py-2 px-4 drop-shadow-lg text-gray-800 rounded">
+    <div
+      class="border bg-grey border-1 grid justify-center items-center py-2 px-4 drop-shadow-lg text-gray-800 rounded">
 
-        <div x-on:click="stopBodyScroll();"
-             hx-get="{% url 'journey_detail' journey.slug %}"
-             hx-target="#journey-overlay"
-             class="cursor-pointer">
+      <div x-on:click="stopBodyScroll();"
+           hx-get="{% url 'journey_detail' journey.slug %}"
+           hx-target="#journey-overlay"
+           class="cursor-pointer">
 
-            <div class="text-xl md:text-2xl font-inter font-semibold leading-normal text-gray-800 mb-2">{{ journey.title }}</div>
-            <div class="font-light text-md">{{ journey.created_on }}</div>
+        <div
+          class="text-xl md:text-2xl font-inter font-semibold leading-normal text-gray-800 mb-2">{{ journey.title }}</div>
+        <div class="font-light text-md">{{ journey.created_on }}</div>
 
-            {% include 'partials/journey_image.html' with journey=journey %}
+        {% include 'partials/journey_image.html' with journey=journey %}
 
-            <div class="font-normal text-md"> {{ journey.summary|truncatewords:5 }} </div>
+        <div class="font-normal text-md"> {{ journey.summary|truncatewords:5 }} </div>
 
 
-        </div>
+      </div>
     </div>
-{% endfor %}
+  {% endfor %}
+</div>

@@ -4,132 +4,131 @@
 
 {% block content %}
 
-    <div class="flex flex-col min-h-screen w-full md:max-w-1/3 items-center">
+  <div class="flex flex-col min-h-screen w-full md:max-w-1/3 items-center">
 
-        <div :class="{ 'hidden': overlay == true}">
-            <div class="bg-limey my-4 px-4 md:px-8 py-4 mx:py-8">
-                <p class="text-grey-800 text-2xl md:text-3xl font-inter font-normal">
-                    <button @click="next='start'">
+    <div :class="{ 'hidden': overlay == true}">
+      <div class="bg-limey my-4 px-4 md:px-8 py-4 mx:py-8">
+        <p class="text-grey-800 text-2xl md:text-3xl font-inter font-normal">
+          <button @click="next='start'">
                                 <span id="start-button" hx-get="{% url 'start' %}"
                                       hx-target="#journey-overlay"
                                       class="text-black-500 hover:text-blue-800">
                    <u>Share</u>
                 </span>
-                    </button>
-                    & discuss stories about joining co&#8209;operatives.
-                </p>
-            </div>
-            {% comment %}saveMyReflectUrl(`journeys/'){% endcomment %}
+          </button>
+          & discuss stories about joining co&#8209;operatives.
+        </p>
+      </div>
+      {% comment %}saveMyReflectUrl(`journeys/'){% endcomment %}
 
 
-            <div
-                    hx-get="{% url 'journeys' %}"
-                    hx-trigger="load, every 5s [checkJourneyCount('journeys_count')]"
-                    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-                    hx-target="#journey-list">
-
-
-                <div id="journey-list"></div>
-
-
-            </div>
-
-
+      <div>
+        <div
+          hx-get="{% url 'journeys' %}"
+          hx-trigger="load, every 5s [checkJourneyCount('journeys_count')]"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+          hx-target="#journey-list">
         </div>
+        <div id="journey-list"></div>
 
-        <!--Empty placeholder of all overlays-->
-        <div id="journey-overlay"></div>
+      </div>
 
 
-        <div class="sticky bottom-0 right-0" :class="{ 'hidden': overlay == true}">
-            <button @click="next='start'">
+    </div>
+
+    <!--Empty placeholder of all overlays-->
+    <div id="journey-overlay"></div>
+
+
+    <div class="sticky bottom-0 right-0" :class="{ 'hidden': overlay == true}">
+      <button @click="next='start'">
       <span hx-get="{% url 'start' %}"
             hx-target="#journey-overlay"
             class="mr-4 bg-limey rounded boarder border-black border-2 p-2 text-grey-500 hover:text-blue-800">
                     Start a Journey
       </span>
-            </button>
-        </div>
-
-        <div id="journeys_count" class="invisible absolute z-10"></div>
-
+      </button>
     </div>
-    {% block scripts %}
 
-        <script>
+    <div id="journeys_count" class="invisible absolute z-10"></div>
 
-            /* scrolling switch and position logic for handling overlay behaviour*/
-            let scrollToPos = 0;
-            let monitorScroll = true
-            const stopBodyScroll = () => {
-                scrollToPos = document.documentElement.style.getPropertyValue('--scroll-y');
-                const body = document.body;
-                body.style.position = 'fixed';
-                /* Centering body position for wider windows
-                until there's styling for larger screens */
-                if (window.innerWidth > 768) {
-                    body.style.left = '50%';
-                    body.style.transform = 'translateX(-50%)';
-                }
+  </div>
+  {% block scripts %}
 
-                monitorScroll = false;
-            };
-            const enableBodyScroll = () => {
-                const body = document.body;
-                body.style.position = '';
+    <script>
 
-                /* Resetting the properties for wider windows
-                until there's styling for larger screens */
-                if (window.innerWidth > 768) {
-                    body.style.left = '';
-                    body.style.transform = '';
-                }
+      /* scrolling switch and position logic for handling overlay behaviour*/
+      let scrollToPos = 0;
+      let monitorScroll = true
+      const stopBodyScroll = () => {
+        scrollToPos = document.documentElement.style.getPropertyValue('--scroll-y');
+        const body = document.body;
+        body.style.position = 'fixed';
+        /* Centering body position for wider windows
+        until there's styling for larger screens */
+        if (window.innerWidth > 768) {
+          body.style.left = '50%';
+          body.style.transform = 'translateX(-50%)';
+        }
 
+        monitorScroll = false;
+      };
+      const enableBodyScroll = () => {
+        const body = document.body;
+        body.style.position = '';
 
-                setTimeout(
-                    function () {
-                        window.scrollTo({
-                            top: parseInt(scrollToPos),
-                            left: 0,
-                            behavior: 'auto'
-                        });
-                        monitorScroll = true;
-                    }, 5);
+        /* Resetting the properties for wider windows
+        until there's styling for larger screens */
+        if (window.innerWidth > 768) {
+          body.style.left = '';
+          body.style.transform = '';
+        }
 
 
-            }
-
-            window.addEventListener('scroll', () => {
-                if (monitorScroll) document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+        setTimeout(
+          function () {
+            window.scrollTo({
+              top: parseInt(scrollToPos),
+              left: 0,
+              behavior: 'auto'
             });
+            monitorScroll = true;
+          }, 5);
 
 
-            initialJourneyCount = 0
+      }
 
-            function checkJourneyCount(myUrl) {
-                //console.log(document.getElementById('journeys_count'))
-                htmx.ajax('GET', myUrl, '#journeys_count')
-
-                if (document.getElementById('journeys_count') == null) return false
-
-                let newJourneyCountHtml = document.getElementById('journeys_count').innerHTML
-                let newJourneyCount = Number(newJourneyCountHtml)
-
-                if (newJourneyCount > initialJourneyCount) {
-                    initialJourneyCount = newJourneyCount
-                    //console.log('new stories')
-                    return true
-                } else {
-                    //console.log('no new story')
-                    return false
-                }
+      window.addEventListener('scroll', () => {
+        if (monitorScroll) document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+      });
 
 
-            }
+      initialJourneyCount = 0
+
+      function checkJourneyCount(myUrl) {
+        //console.log(document.getElementById('journeys_count'))
+        htmx.ajax('GET', myUrl, '#journeys_count')
+
+        if (document.getElementById('journeys_count') == null) return false
+
+        let newJourneyCountHtml = document.getElementById('journeys_count').innerHTML
+        let newJourneyCount = Number(newJourneyCountHtml)
+
+        if (newJourneyCount > initialJourneyCount) {
+          initialJourneyCount = newJourneyCount
+          console.log('new stories')
+          return true
+        } else {
+          //console.log('no new story')
+          return false
+        }
 
 
-        </script>
+      }
 
-    {% endblock %}
+
+    </script>
+
+  {% endblock %}
 
 {% endblock %}
