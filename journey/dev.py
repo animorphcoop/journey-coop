@@ -6,7 +6,7 @@ except ImportError:
 from .base import *
 
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = 'django-insecure-xe*tvqiv747y*^w$2=r2l3)_^!phd&ylp%yq)bm1hre1=g2*=y'
 
@@ -22,7 +22,7 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
 ]

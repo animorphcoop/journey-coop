@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('', views.landing, name="landing"),
     path('password_reset/<uidb64>/<token>/', views.UserResetConfirm.as_view(), name='password_reset_confirm'),
@@ -22,4 +23,3 @@ htmx_urlpatterns = [
 ]
 
 urlpatterns += htmx_urlpatterns
-
