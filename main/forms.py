@@ -51,9 +51,7 @@ class AuthenticationForm(DjAuthenticationForm):
         fields = ("email", "password",)
 
 
-
 class UserResetForm(DjPasswordResetForm):
-
     from_email = None
     html_email_template_name = None
     subject_template_name = "registration/password_reset_subject.txt"
@@ -63,9 +61,8 @@ class UserResetForm(DjPasswordResetForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        #print(cleaned_data)
+        # print(cleaned_data)
         return cleaned_data
-
 
     def send_mail(
         self,
@@ -80,8 +77,8 @@ class UserResetForm(DjPasswordResetForm):
         Send a django.core.mail.EmailMultiAlternatives to `to_email`.
         """
 
-        subject_template_name="auto/password_reset_subject.txt",
-        email_template_name="auto/password_reset_email.html",
+        subject_template_name = "auto/password_reset_subject.txt",
+        email_template_name = "auto/password_reset_email.html",
 
         subject = loader.render_to_string(subject_template_name, context)
         # Email subject *must not* contain newlines
@@ -92,7 +89,7 @@ class UserResetForm(DjPasswordResetForm):
         if html_email_template_name is not None:
             html_email = loader.render_to_string(html_email_template_name, context)
             email_message.attach_alternative(html_email, "text/html")
-
+        print('sending email')
         email_message.send()
 
 
@@ -103,14 +100,12 @@ class SetNewPasswordForm(DjSetPasswordForm):
         return cleaned_data
 
 
-
 class CreateJourneyForm(forms.ModelForm):
     # ALLOWED_AUDIO_TYPES = ['wav', 'wma', 'mp3', 'aiff', 'aac', 'm4a']
 
     class Meta:
         model = Journey
         fields = ("title", "summary", "image", "audio",)
-
 
 
 class CreateResponseForm(forms.ModelForm):

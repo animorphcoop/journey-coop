@@ -19,6 +19,11 @@ def landing(request):
     return render(request, 'index.html')
 
 
+def error_handler(request, exception=None):
+    return render(request, 'error_landing.html')
+
+
+
 def journeys(request):
     journeys = Journey.objects.all()
     context = {

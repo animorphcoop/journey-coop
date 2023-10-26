@@ -14,3 +14,9 @@ EMAIL_HOST_PASSWORD = 'account-password'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+POSTGRES_DB = 'journey_db_dev'
+POSTGRES_USER = 'journey_user_dev'
+POSTGRES_PASSWORD = 'local_testing_password'
+DB_HOST = 'localhost'
