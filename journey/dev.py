@@ -14,6 +14,8 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+#https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 INSTALLED_APPS += [
     'django_browser_reload',
     'debug_toolbar',
@@ -23,11 +25,15 @@ MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 DEBUG_TOOLBAR_CONFIG = {
     "ROOT_TAG_EXTRA_ATTRS": "hx-preserve"
 }
 
-
+# PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

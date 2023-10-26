@@ -6,14 +6,47 @@ A community platform for sharing the life events that led people to join co-ops 
 The goal of the platform is to create an organic repository of inspiring stories and to facilitate a discussion on what brings people into the co-op ecosystem.
 
 ## What is it made of?
-Server-Side-Rendered web-app comprising of Django, HTMX, Alpine.js and Tailwind. The frontend (including Typescript bundled with Vite. 
+Server-Side-Rendered web-app comprising of Django, HTMX, Alpine.js and Tailwind. The frontend (including Typescript bundled with Vite.
 
 ## What does it facilitate?
 With a single-page-application feel, the website enables users to create accounts, post stories and respond to them without refreshing.
 
 
-## Setup & development 
+## Setup & development
 
+### PostgreSQL
+
+1. Project uses PostreSQL database. Before being able to run the project properly, you need to install it on your device. On linux you need the following system packages:
+
+```bash
+sudo apt install postgresql postgresql-contrib libpq-dev python3-dev
+```
+
+2. Once installed, configure the db, user in line with `journey/dev.py`:
+
+```bash
+sudo -u postgres psql
+```
+
+```sql
+CREATE DATABASE journey_db_dev;
+```
+
+```sql
+CREATE USER journey_user_dev WITH ENCRYPTED PASSWORD 'local_testing_password';
+```
+
+```sql
+ALTER ROLE myuser SET client_encoding TO 'utf8';
+ALTER ROLE myuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myuser SET timezone TO 'UTC';
+```
+
+```sql
+GRANT ALL PRIVILEGES ON DATABASE journey_db_dev TO journey_user_dev;
+```
+
+### Django
 1. Create virtual environment and activate it (after cloning and entering the project root dir):
 
 ```bash
@@ -23,10 +56,11 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-2. Prepare for running Django base
+
+2. Prepare Django for development
 
 ```bash
-pip install -r requirements.txt
+pip install -r dev_requirements.txt
 ```
 
 ```bash
@@ -37,7 +71,7 @@ python manage.py migrate
 ```bash
 python manage.py makemigrations
 ```
-(if in doubt that some static assets have not been pulled
+(if in doubt that some static assets have not been pulled)
 ```bash
 python manage.py collectstatic
 ```
@@ -48,7 +82,8 @@ python manage.py createsuperuser
 ```
 
 
-3. Before running Django, open another terminal window to set up Vite to bundle frontend
+### Vite
+Before running Django, open another terminal window to set up Vite to bundle frontend
 
 ```bash
 npm install
@@ -70,18 +105,25 @@ python manage.py runserver
 ```
 
 ## Deployment
-with uWSGI and Caddy on Debian 
+with uWSGI and Caddy on Debian
 
 ### Project setup on the server
-- Setup keys & clone repo
-- Follow installation steps above (from the start + add local.py with sensitive creds)
+1. Setup keys & clone repo
+2. Follow installation steps above (from the start, install requirements.txt, add local.py with secrets, make sure there is a match with PostgreSQL credentials)
 ```bash
 npm run build
+
 ```
-(don't forget to run)
+3. Collect static files
 ```bash
 python manage.py collectstatic
 ```
+
+3. Export production settings
+```bash
+export DJANGO_SETTINGS_MODULE='journey.settings.production'
+```
+
 
 ### uwsgi
 journey.ini is creating a pid and log in uwsgi directory
