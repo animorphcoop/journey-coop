@@ -108,3 +108,25 @@ caddy start
 caddy reload --config /etc/caddy/Caddyfile
 ```
 
+## Running Tests
+In order to run tests before to push your changes to main branch or create a Pull Request, you need to install a couple of libraries:
+
+```bash
+pip install -r dev_requirements.txt
+```
+
+Then you have to measure your code coverage, ideally always maintain at least a 90% of cc.
+
+```bash
+coverage run --source='.' manage.py test
+coverage report
+```
+
+If you would like to analyze visually the lines of code covered by the tests, you should run this command after the previous commands:
+
+```bash
+coverage html
+```
+
+This will generate an html report inside the folder htmlcov/.
+For further info, please visit [coverage docs](https://coverage.readthedocs.io/en/7.3.2/)
