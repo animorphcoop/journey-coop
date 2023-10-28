@@ -20,11 +20,13 @@
 
 
 </head>
-<body x-data="{overlay: false }" class="bg-greyish">
+<body x-data="{overlay: false, layerData: ''}" class="bg-greyish">
 
 <div class="max-w-3xl m-auto">
     <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-    <div id="app" class="flex flex-col" x-data="{ next: '', logged: false}">
+    <div id="app" x-on:layerchange="layerData=getLayerData($event);"
+    class="flex flex-col" x-data="{ next: '', logged: false}">
+    <div x-init="layerEventTrigger('landing', 'login'); console.log(layerData);"></div>
         {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
         {% if messages %}
             {% include "partials/feedback_banner_message.html" with messages=messages %}
