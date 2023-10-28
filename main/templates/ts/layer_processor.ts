@@ -8,15 +8,23 @@ function getLayerData(event: CustomEvent) {
 
     console.log('event received')
 
+    const dataToReturn = initialiseLogin()
     //TODO: trigger additional processing logic
-    return 'OK';
+    return dataToReturn
+}
+
+
+function initialiseLogin() {
+    let feedbackMessage = (document.getElementById('feedback-message'))
+    if (feedbackMessage) {
+        feedbackMessage.remove();
+    }
+    return 'OK'
 }
 
 function layerEventTrigger(currentLayer: string, previousLayer: string) {
-    let appContainer = document.getElementById('app');
-    console.log(appContainer)
+    let appContainer = document.getElementById('app')
     if (appContainer) {
-        console.log('about to dispatch')
         appContainer.dispatchEvent(
             new CustomEvent('layerchange', {
                 detail: {

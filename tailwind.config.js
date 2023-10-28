@@ -49,14 +49,14 @@ export default {
     theme: {
         extend: {
             colors: {
-                main: { 
+                main: {
                     DEFAULT: '#111827'
                 },//add tailwind colors here
                 greyish: {
-                    DEFAULT: '#e9efe2' 
+                    DEFAULT: '#e9efe2'
                 },
                 grey: {
-                    DEFAULT: '#F1F1F1' 
+                    DEFAULT: '#F1F1F1'
                 },
                 limey: {
                     DEFAULT: '#dcf6a4'
@@ -82,7 +82,6 @@ export default {
          */
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
-        require('@tailwindcss/line-clamp'),
         require('@tailwindcss/aspect-ratio'),
     ],
 }

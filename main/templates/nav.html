@@ -34,9 +34,9 @@
     {% else %}
       {% comment %}If we want to login after reset we want to clear the message{% endcomment %}
       <button
-        x-on:click="if (document.getElementById('feedback-message')){ document.getElementById('feedback-message').remove(); }"
         class="bg-greyish rounded boarder border-black border-2 p-2">
            <span hx-get="{% url 'login' %}"
+                 hx-on:htmx:before-request="layerEventTrigger('landing', 'login');"
                  hx-target="#journey-overlay"
                  class="text-black-500 hover:text-blue-800 cursor-pointer">
                  Login
