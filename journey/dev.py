@@ -8,6 +8,8 @@ from .base import *
 
 DEBUG = True
 
+DJANGO_VITE_DEV_MODE = True
+
 SECRET_KEY = 'django-insecure-xe*tvqiv747y*^w$2=r2l3)_^!phd&ylp%yq)bm1hre1=g2*=y'
 
 ALLOWED_HOSTS = ['*']

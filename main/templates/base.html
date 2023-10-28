@@ -1,3 +1,4 @@
+{% load custom_tags %}
 {% load static %}
 {% load django_vite %}
 
@@ -15,6 +16,7 @@
         {# Override this in templates to add extra stylesheets #}
     {% endblock %}
 
+    {% vite_hmr_client %}
    {# Base script - pulls in all libraries and global stylesheets  #}
     {% vite_asset 'main/templates/ts/base.ts' %}
 
@@ -44,6 +46,7 @@
     </div>
 </div>
 
+{% journey_vite_prevent_unstyled_flash %}
 
 </body>
 <style>

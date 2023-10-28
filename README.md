@@ -10,8 +10,8 @@ brings people into the co-op ecosystem.
 
 ## What is it made of?
 
-Server-Side-Rendered web-app comprising of Django, HTMX, Alpine.js and Tailwind. The frontend (including Typescript
-bundled with Vite.
+Server-Side-Rendered web-app comprising of [Django](https://www.djangoproject.com/), [HTMX](https://htmx.org/), [Alpine.js](https://alpinejs.dev/) and [Tailwind CSS](https://tailwindcss.com/). The frontend (including Typescript
+bundled with [Vite](https://github.com/MrBin99/django-vite/tree/master).
 
 ## What does it facilitate?
 

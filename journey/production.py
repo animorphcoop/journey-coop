@@ -16,3 +16,4 @@ DATABASES = {
     }}
 
 DEBUG = False
+DJANGO_VITE_DEV_MODE = False
