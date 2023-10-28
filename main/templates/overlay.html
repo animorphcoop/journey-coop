@@ -1,45 +1,46 @@
 <div x-init="overlay = true;" id="journey-modal" class="fade top-0 max-w-3xl m-auto">
 
-        <div class="relative w-full max-h-screen overflow-y-auto">
+  <div class="relative w-full max-h-screen overflow-y-auto">
 
 
-            <button type="button"
-                    x-on:click="overlay = false;
+    <button id="top-close"
+            x-on:click="overlay = false;
                                         enableBodyScroll();
                                         document.getElementById('journey-modal').remove();
                                         next='';
 "
-                    class="close-modal absolute top-2 right-2 text-3xl">
-                <svg xmlns="http://www.w3.org/2000/svg" ; width="20" height="20" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="feather feather-x">
-                    <path d="M18 6L6 18M6 6l12 12"></path>
-                </svg>
-            </button>
+            class="close-modal absolute top-2 right-2 text-3xl">
+      <svg xmlns="http://www.w3.org/2000/svg" ; width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="feather feather-x">
+        <path d="M18 6L6 18M6 6l12 12"></path>
+      </svg>
+    </button>
 
 
-            <div
-                    class="flex flex-col items-center justify-between p-4 border-b border-gray-200 rounded-t-md mt-4">
+    <div
+      class="flex flex-col items-center justify-between p-4 border-b border-gray-200 rounded-t-md mt-4">
 
 
-                {% block content %}
+      {% block content %}
 
-                {% endblock %}
-
-
-            </div>
+      {% endblock %}
 
 
-            <div x-on:click="overlay = false;
+    </div>
+
+
+    <div id="bottom-close"
+      x-on:click="overlay = false;
             enableBodyScroll();
             document.getElementById('journey-modal').remove();
             next='';"
-                 class="close-modal flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                {% include "partials/button.html" with type="button" text="Close" %}
-            </div>
+         class="close-modal flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+      {% include "partials/button.html" with type="button" text="Close" %}
+    </div>
 
 
-        </div>
+  </div>
 
 
 </div>

@@ -1,23 +1,46 @@
 function getLayerData(event: CustomEvent) {
     const eventDetail = event.detail;
-    let currentLevelName = eventDetail.current;
-    let currentStageName = eventDetail.previous;
+    let currentState = eventDetail.current;
+    let nextState = eventDetail.previous;
 
-    console.log(currentLevelName)
-    console.log(currentStageName)
+    let dataToReturn = ''
+    console.log(currentState)
+    console.log(nextState)
 
     console.log('event received')
 
-    const dataToReturn = initialiseLogin()
+    if (currentState == 'landing') {
+
+        if (nextState == 'login') {
+            dataToReturn = initialiseLoginView()
+
+        } else if (nextState == 'nickname') {
+            dataToReturn = initialiseNicknameView()
+        }
+    }
+
     //TODO: trigger additional processing logic
     return dataToReturn
 }
 
 
-function initialiseLogin() {
+function initialiseLoginView() {
     let feedbackMessage = (document.getElementById('feedback-message'))
     if (feedbackMessage) {
         feedbackMessage.remove();
+    }
+    return 'OK'
+}
+
+function initialiseNicknameView() {
+    let topClose = (document.getElementById('top-close'))
+    if (topClose) {
+        topClose.remove();
+    }
+
+    let bottomClose = (document.getElementById('bottom-close'))
+    if (bottomClose) {
+        bottomClose.remove();
     }
     return 'OK'
 }

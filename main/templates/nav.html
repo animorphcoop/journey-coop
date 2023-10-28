@@ -25,6 +25,7 @@
       {% else %}
         <div hx-get="{% url 'nickname' user.pk %}"
              hx-trigger="load"
+             hx-on:htmx:after-request="layerEventTrigger('landing', 'nickname');"
              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
              hx-target="#journey-overlay">
 
