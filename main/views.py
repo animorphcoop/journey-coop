@@ -133,7 +133,10 @@ class CreateJourney(CreateView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        return render(self.request, "journey_detail.html", {'journey': self.object})
+        response = render(self.request, "journey_detail.html", {'journey': self.object})
+        # add custom trigger event so the newly created journey is triggers reloading of journey list
+        response['HX-Trigger'] = 'created-journey'
+        return response
 
 
 class JourneyDetail(DetailView):
@@ -144,7 +147,6 @@ class JourneyDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['responses'] = Response.objects.filter(journey=self.object).order_by('created_on')
         context['form'] = CreateResponseForm()
-        print(context)
         return context
 
 

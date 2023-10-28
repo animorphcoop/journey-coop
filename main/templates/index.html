@@ -24,8 +24,7 @@
       <div>
         <div
           hx-get="{% url 'journeys' %}"
-          {% comment %}hx-trigger="load, every 5s [checkJourneyCount('journeys_count')]"{% endcomment %}
-          hx-trigger="load"
+          hx-trigger="load, created-journey from:body"
           hx-target="#journey-list">
         </div>
         <div id="journey-list"></div>
