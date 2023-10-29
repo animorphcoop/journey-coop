@@ -52,8 +52,12 @@ class UserLogin(LoginView):
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
-        context = {'success': True}
-        return render(self.request, "nav.html", context)
+
+        if str(form.get_user()) == str(form.get_user().email):
+            print('triggering nickname')
+            return render(self.request, "partials/nickname_trigger.html")
+        else:
+            return render(self.request, "partials/overlay_end.html")
 
     def form_invalid(self, form):
         context = {'form': form}
@@ -135,7 +139,7 @@ class CreateJourney(CreateView):
         self.object.save()
         response = render(self.request, "journey_detail.html", {'journey': self.object})
         # add custom trigger event so the newly created journey is triggers reloading of journey list
-        response['HX-Trigger'] = 'created-journey'
+        response['HX-Trigger'] = 'created_journey'
         return response
 
 

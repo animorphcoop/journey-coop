@@ -17,6 +17,12 @@ function getLayerData(event: CustomEvent) {
         } else if (nextState == 'nickname') {
             dataToReturn = initialiseNicknameView()
         }
+
+    } else if (currentState == 'nickname') {
+        if (nextState == 'landing') {
+            dataToReturn = initialiseLoggedLandingView()
+
+        }
     }
 
     //TODO: trigger additional processing logic
@@ -44,6 +50,27 @@ function initialiseNicknameView() {
     }
     return 'OK'
 }
+
+function initialiseLoggedLandingView() {
+
+    let loginButton = (document.getElementById('login-button'))
+    if (loginButton) {
+        if (!loginButton.classList.contains('hidden')) {
+            loginButton.classList.add('hidden');
+        }
+    }
+
+    let logoutButton = (document.getElementById('logout-button'))
+    if (logoutButton) {
+        if (logoutButton.classList.contains('hidden')) {
+            logoutButton.classList.remove('hidden');
+        }
+    }
+
+
+    return 'OK'
+}
+
 
 function layerEventTrigger(currentLayer: string, previousLayer: string) {
     let appContainer = document.getElementById('app')

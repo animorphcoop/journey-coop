@@ -24,7 +24,7 @@
       <div>
         <div
           hx-get="{% url 'journeys' %}"
-          hx-trigger="load, created-journey from:body"
+          hx-trigger="load, created_journey from:body"
           hx-target="#journey-list">
         </div>
         <div id="journey-list"></div>
@@ -48,7 +48,12 @@
       </button>
     </div>
 
-    <div id="journeys_count" class="invisible absolute z-10"></div>
+  {% comment %} In case the user does not have nickname and country set yet and reloaded the page{% endcomment %}
+  {% if user.is_authenticated %}
+    {% if not user.nickname %}
+      {% include 'partials/nickname_trigger.html' %}
+      {% endif %}
+  {% endif %}
 
   </div>
   {% block scripts %}
@@ -100,30 +105,6 @@
         if (monitorScroll) document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
       });
 
-
-      // commented out for now as in production causes regular refresh when triggered from load
-{% comment %}
-      var initialJourneyCount = 0
-      function checkJourneyCount(myUrl) {
-
-        if (document.getElementById('journeys_count') == null) return false
-
-        htmx.ajax('GET', myUrl, '#journeys_count')
-
-        let newJourneyCountHtml = document.getElementById('journeys_count').innerHTML
-        let newJourneyCount = Number(newJourneyCountHtml)
-
-        if (newJourneyCount > initialJourneyCount) {
-          initialJourneyCount = newJourneyCount
-          console.log('new stories')
-          return true
-        } else {
-          console.log('no new story')
-          return false
-        }
-
-      }
-{% endcomment %}
 
 
     </script>
