@@ -5,45 +5,61 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Journey to Co-op</title>
+  <meta charset="UTF-8">
+  <title>Journey to Co-op</title>
 
+  <meta name="description"
+        content="A community space for sharing the life events that led people to join co-ops across the globe."/>
 
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta property="og:title" content="Journey to co-op"/>
+  <meta property="og:url" content="https://journey.coop"/>
+  <meta property="og:description"
+        content="A community space for sharing the life events that led people to join co-ops across the globe."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="en_GB"/>
+  <meta property="og:image" content="https://journey.coop/static/images/journey_ai_logo_inverted.dc9653d5059d.jpg"/>
 
-    {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-    {% endblock %}
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    {% vite_hmr_client %}
-   {# Base script - pulls in all libraries and global stylesheets  #}
-    {% vite_asset 'main/templates/ts/base.ts' %}
+  {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+  {% endblock %}
+
+  {% vite_hmr_client %}
+  {# Base script - pulls in all libraries and global stylesheets  #}
+  {% vite_asset 'main/templates/ts/base.ts' %}
 
 
 </head>
 <body x-data="{overlay: false, layerData: ''}" class="bg-greyish">
 
 <div class="max-w-3xl m-auto">
-    <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-    <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
-    class="flex flex-col" x-data="{ next: '', logged: false}">
+  <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
+  <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
+       class="flex flex-col" x-data="{ next: '', logged: false}">
     <div x-init=" console.log(layerData);"></div>
-        {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
-        {% if messages %}
-            {% include "partials/feedback_banner_message.html" with messages=messages %}
-        {% endif %}
+    {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
+    {% if messages %}
+      {% include "partials/feedback_banner_message.html" with messages=messages %}
+    {% endif %}
 
-        <div :class="{ 'hidden': overlay == true}"
-             x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
-            {% include 'nav.html' %}
-        </div>
-
-
-        {% block content %}
-
-        {% endblock %}
+    <div :class="{ 'hidden': overlay == true}"
+         x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
+      {% include 'partials/nav.html' %}
     </div>
+
+
+    {% block content %}
+
+    {% endblock %}
+
+    <div :class="{ 'hidden': overlay == true}"></div>
+    {% include 'partials/footer.html' %}
+
+  </div>
+
+</div>
 </div>
 
 {% journey_vite_prevent_unstyled_flash %}
@@ -53,11 +69,11 @@
 
 </style>
 <script>
-{% comment %}
-    document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-    })
-{% endcomment %}
+  {% comment %}
+      document.body.addEventListener('htmx:configRequest', (event) => {
+          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+  {% endcomment %}
 
 </script>
 

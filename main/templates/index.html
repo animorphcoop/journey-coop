@@ -55,7 +55,7 @@
     {% comment %} In case the user does not have nickname and country set yet and reloaded the page{% endcomment %}
     {% if not user.nickname %}
       {% include 'partials/nickname_trigger.html' %}
-      {% endif %}
+    {% endif %}
 
   {% endif %}
 
