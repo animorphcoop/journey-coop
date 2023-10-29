@@ -67,7 +67,6 @@ class UserLogin(LoginView):
         return render(self.request, "overlays/login.html", context)
 
 
-
 # Need to rotate CSRF token and pass it to logout button for it to work
 def get_logout(request):
     rotate_token(request)
@@ -76,7 +75,6 @@ def get_logout(request):
         'new_csrf': request.META["CSRF_COOKIE"]
     }
     return render(request, "partials/logout_button.html", context)
-
 
 
 class UserLogout(LogoutView):
@@ -181,4 +179,8 @@ class CreateResponse(CreateView):
         self.object.author = self.request.user
         self.object.save()
         responses = Response.objects.filter(journey=self.object.journey).order_by('created_on')
-        return render(self.request, "partials/journey_responses.html", {'responses': responses})
+        context = {
+            'responses': responses
+        }
+
+        return render(self.request, "partials/journey_responses.html", context)
