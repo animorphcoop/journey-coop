@@ -58,7 +58,6 @@ class UserLogin(LoginView):
             response = render(self.request, "partials/nickname_trigger.html")
         else:
             response = HttpResponse("<script>layerEventTrigger('login', 'landing');</script>")
-
         response['HX-Trigger'] = 'logged_in'
         return response
 
@@ -70,7 +69,6 @@ class UserLogin(LoginView):
 # Need to rotate CSRF token and pass it to logout button for it to work
 def get_logout(request):
     rotate_token(request)
-    print(request.META["CSRF_COOKIE"])
     context = {
         'new_csrf': request.META["CSRF_COOKIE"]
     }

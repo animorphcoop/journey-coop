@@ -7,14 +7,13 @@ function getLayerData(event: CustomEvent) {
     console.log(currentState)
     console.log(nextState)
 
-    console.log('event received')
-
     if (currentState == 'landing') {
 
         if (nextState == 'login') {
             dataToReturn = initialiseLoginView()
 
         } else if (nextState == 'nickname') {
+            console.log('triggering nickname')
             dataToReturn = initialiseNicknameView()
         }
 

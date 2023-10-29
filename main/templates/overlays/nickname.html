@@ -4,38 +4,37 @@
 
 {% block content %}
 
-    {% comment %} removing default overlay behaviour with close buttons since this is a standalone page {% endcomment %}
+  {% comment %} removing default overlay behaviour with close buttons since this is a standalone page {% endcomment %}
 
-    <div class="max-w-sm lg:max-w-md p-8 bg-white">
-      <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">
-        Almost there...</h4>
-        <p class="text-xl font-light">Please enter your nickname and country to display alongside your activity.</p>
+  <div class="max-w-sm lg:max-w-md p-8 bg-white">
+    <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">
+      Almost there...</h4>
+    <p class="text-xl font-light">Please enter your nickname and country to display alongside your activity.</p>
 
-        {% comment %}TODO: swap with nav and injecting overlay_end{% endcomment %}
-        <form hx-post="{% url 'nickname' user.pk %}"
-              hx-target="#journey-modal"
-              hx-swap="afterend">
-            {% csrf_token %}
-            {% for field in form %}
 
-                <div class="max-w-xs">
-                    {% if field.name == "nickname" %}
-                        <div class="py-4">
-                            {% include "partials/input_label.html" with for="nickname-input" label="Nickname" %}
-                            {% include "partials/input_text_single.html" with field=field id="nickname-input" name="nickname" type="text" %}
-                        </div>
-                    {% elif field.name == "country" %}
-                        {% include "partials/input_label.html" with for="country-input" label="Country" %}
+    <form hx-post="{% url 'nickname' user.pk %}"
+          hx-target="#journey-overlay">
+      {% csrf_token %}
+      {% for field in form %}
 
-                        {% render_field field id="country-input" name="country" class="w-full bg-gray-50 rounded-lg border-gray-500 py-2 px-3" %}
-                    {% endif %}
-                </div>
-            {% endfor %}
-            <div class="my-4">
-                {% include "partials/button.html" with text="Add information" %}
+        <div class="max-w-xs">
+          {% if field.name == "nickname" %}
+            <div class="py-4">
+              {% include "partials/input_label.html" with for="nickname-input" label="Nickname" %}
+              {% include "partials/input_text_single.html" with field=field id="nickname-input" name="nickname" type="text" %}
             </div>
-        </form>
+          {% elif field.name == "country" %}
+            {% include "partials/input_label.html" with for="country-input" label="Country" %}
 
-    </div>
+            {% render_field field id="country-input" name="country" class="w-full bg-gray-50 rounded-lg border-gray-500 py-2 px-3" %}
+          {% endif %}
+        </div>
+      {% endfor %}
+      <div class="my-4">
+        {% include 'partials/button_submit.html' with text='Add information' %}
+      </div>
+    </form>
+
+  </div>
 
 {% endblock %}

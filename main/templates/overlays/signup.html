@@ -36,7 +36,8 @@
           {% endif %}
         {% endfor %}
 
-        <button type="submit" class="border border-violety rounded border-2 p-2">Submit</button>
+             {% include 'partials/button_submit.html' with text='Submit' %}
+
 
         {% if form.errors %}
 
