@@ -8,6 +8,16 @@
   <meta charset="UTF-8">
   <title>Journey to Co-op</title>
 
+  <meta name="description"
+        content="A community space for sharing the life events that led people to join co-ops across the globe."/>
+
+  <meta property="og:title" content="Journey to co-op"/>
+  <meta property="og:url" content="https://journey.coop"/>
+  <meta property="og:description"
+        content="A community space for sharing the life events that led people to join co-ops across the globe."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="en_GB"/>
+  <meta property="og:image" content="https://journey.coop/static/images/journey_ai_logo_inverted.dc9653d5059d.jpg"/>
 
   <meta name="description" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -44,18 +54,12 @@
 
     {% endblock %}
 
-    <footer class="bg-white">
-      <div class="flex items-center px-2 md:8 py-8 mx-auto content-center">
-        <p class="text-sm text-gray-500 mx-auto">Made open with 🩶 feedback & contribute via
-          <a href="https://github.com/animorphcoop/journey-coop/issues"><img class="ml-2 lg:ml-4 w-6 md:w-8 h-auto inline" src="{% static 'images/github_mark.png' %}"></a>
-        </p>
-
-
-      </div>
-    </footer>
-
+    <div :class="{ 'hidden': overlay == true}"></div>
+    {% include 'partials/footer.html' %}
 
   </div>
+
+</div>
 </div>
 
 {% journey_vite_prevent_unstyled_flash %}

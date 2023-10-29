@@ -155,7 +155,7 @@ class CreateJourney(CreateView):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        response = render(self.request, "journey_detail.html", {'journey': self.object})
+        response = render(self.request, "overlays/journey_detail.html", {'journey': self.object})
         # add custom trigger event so the newly created journey is triggers reloading of journey list
         response['HX-Trigger'] = 'created_journey'
         return response
@@ -163,7 +163,7 @@ class CreateJourney(CreateView):
 
 class JourneyDetail(DetailView):
     model = Journey
-    template_name = "journey_detail.html"
+    template_name = "overlays/journey_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
