@@ -4,8 +4,8 @@ function getLayerData(event: CustomEvent) {
     let nextState = eventDetail.previous;
 
     let dataToReturn = ''
-    console.log(currentState)
-    console.log(nextState)
+    //console.log(currentState)
+    //console.log(nextState)
 
     if (currentState == 'landing') {
 
@@ -13,7 +13,6 @@ function getLayerData(event: CustomEvent) {
             dataToReturn = initialiseLoginView()
 
         } else if (nextState == 'nickname') {
-            console.log('triggering nickname')
             dataToReturn = initialiseNicknameView()
         }
 
@@ -75,7 +74,6 @@ function initialiseNicknameView() {
 
 
 function loggedInNav() {
-    console.log('imflipin')
     let loginButton = (document.getElementById('login-button'))
     if (loginButton) {
         if (!loginButton.classList.contains('hidden')) {
