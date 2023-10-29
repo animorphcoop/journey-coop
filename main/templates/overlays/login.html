@@ -4,8 +4,8 @@
 
 {% block content %}
     <div class="flex items-center justify-center bg-gray-900 block">
-        <div class="w-full max-w-sm p-8 bg-white ">
-            <h2 class="text-2xl text-center text-gray-900 mb-6">Login</h2>
+        <div class="max-w-sm lg:max-w-md p-8 bg-white">
+            <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">Login</h4>
             <form hx-post="{% url 'login' %}" hx-target="#journey-overlay">
                 {% csrf_token %}
 

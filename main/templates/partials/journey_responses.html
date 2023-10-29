@@ -5,7 +5,8 @@
     {% for response in responses %}
     <li class="flex flex-col my-4 pl-4 bg-limey drop-shadow-lg">
     <div class="grid grid-cols-2 py-2 justify-center items-center">
-        <span class="text-sm font-semibold">{{response.author}}</span>
+        <span class="text-sm font-semibold">{{response.author}} <img src="{{ journey.author.country.flag }}"
+                                                                          class="inline max-w-sm"></span></span>
         <span class="text-grey-500 text-xs">{{ response.created_on|date:"d/m/y" }} {{ response.created_on|date:"G:i" }} </span>
     </div>
 

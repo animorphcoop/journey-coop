@@ -39,7 +39,7 @@ def journeys_count(request):
 
 class UserCreate(CreateView):
     form_class = UserCreationForm
-    template_name = "signup.html"
+    template_name = "overlays/signup.html"
 
     def form_valid(self, form):
         self.object = form.save()
@@ -49,7 +49,7 @@ class UserCreate(CreateView):
 
 class UserLogin(LoginView):
     form_class = AuthenticationForm
-    template_name = "login.html"
+    template_name = "overlays/login.html"
 
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
@@ -64,7 +64,7 @@ class UserLogin(LoginView):
 
     def form_invalid(self, form):
         context = {'form': form}
-        return render(self.request, "login.html", context)
+        return render(self.request, "overlays/login.html", context)
 
 
 
@@ -83,14 +83,12 @@ class UserLogout(LogoutView):
     template_name = "logout.html"
 
     def post(self, request, *args, **kwargs):
-
         auth_logout(request)
-        # return render(self.request, "nav.html")
         return HttpResponse("<script>layerEventTrigger('loggedin', 'loggedout');</script>")
 
 
 class UserReset(PasswordResetView):
-    template_name = "password_reset.html"
+    template_name = "overlays/password_reset.html"
     form_class = UserResetForm
 
     def form_valid(self, form):
@@ -114,7 +112,7 @@ class UserReset(PasswordResetView):
 class UserNickname(UpdateView):
     model = User
     form_class = SetNicknameForm
-    template_name = "nickname.html"
+    template_name = "overlays/nickname.html"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -141,7 +139,7 @@ class UserResetConfirm(PasswordResetConfirmView):
 
 class CreateJourney(CreateView):
     form_class = CreateJourneyForm
-    template_name = 'journey_start.html'
+    template_name = 'overlays/journey_start.html'
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -174,7 +172,7 @@ class JourneyDetail(DetailView):
 
 class CreateResponse(CreateView):
     form_class = CreateResponseForm
-    template_name = 'journey_start.html'
+    template_name = 'overlays/journey_start.html'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

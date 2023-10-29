@@ -6,9 +6,10 @@
 
     {% comment %} removing default overlay behaviour with close buttons since this is a standalone page {% endcomment %}
 
-    <div class="max-w-sm">
-
-        <header class="text-2xl">Please enter your nickname and country to display alongside your activity.</header>
+    <div class="max-w-sm lg:max-w-md p-8 bg-white">
+      <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">
+        Almost there...</h4>
+        <p class="text-xl font-light">Please enter your nickname and country to display alongside your activity.</p>
 
         {% comment %}TODO: swap with nav and injecting overlay_end{% endcomment %}
         <form hx-post="{% url 'nickname' user.pk %}"

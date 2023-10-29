@@ -26,7 +26,8 @@ function getLayerData(event: CustomEvent) {
         }
     } else if (currentState == 'nickname') {
         if (nextState == 'landing') {
-            dataToReturn = loggedInNav()
+            loggedInNav()
+            dataToReturn = toggleOverlayEvent()
 
         }
     } else if (currentState == 'loggedout') {

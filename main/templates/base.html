@@ -46,7 +46,7 @@
 
     <div :class="{ 'hidden': overlay == true}"
          x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
-      {% include 'nav.html' %}
+      {% include 'partials/nav.html' %}
     </div>
 
 

@@ -1,0 +1,118 @@
+{% extends "overlay.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="flex items-center justify-center block">
+    <div class="w-full max-w-md lg: max-w-lg p-2 lg: px-4 bg-white ">
+      <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">Share your
+        journey!</h4>
+      <p class="font-light pb-4">Please share a short (max 500 characters) summary of how you found yourself in a
+        co-operative. Share an image and perhaps an audio file too!</p>
+
+
+      <div class="editor mx-auto w-full flex flex-col text-gray-800 border border-gray-300 p-2 shadow-lg max-w-2xl">
+        <form hx-post="{% url 'start' %}"
+              enctype="multipart/form-data"
+              hx-target="#journey-overlay"
+        >
+
+          {% csrf_token %}
+
+
+          {% include "partials/input_label.html" with for=title label="Title" %}
+
+
+          {% include "partials/input_text_single.html" with field=form.title id=title name=title type=text placeholder="Name your journey..." %}
+          <div class="my-4"></div>
+          {% include "partials/input_label.html" with for=summary label="Summary" %}
+
+          {% include "partials/input_text_area.html" with field=form.summary id=summary name=summary type=textarea callback="updateCharacterCount($event)" placeholder="Summarise your story..." %}
+
+          {% render_field form.image id="imageField" hidden=True @change.debounce="fileChange($event)" %}
+          {% render_field form.audio id="audioField" hidden=True @change.debounce="fileChange($event)" %}
+
+
+          <!-- icons and character counter -->
+          <div class="icons flex text-gray-500 m-2">
+
+            <button x-on:click="event.preventDefault(); document.getElementById('imageField').click()">
+              <svg id="picture-icon"
+                   class="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7 bg-white"
+                   xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M20.4 14.5L16 10 4 20"/>
+              </svg>
+            </button>
+            <button x-on:click="event.preventDefault(); document.getElementById('audioField').click()">
+              <svg id="audio-icon"
+                   class="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
+                   xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="5.5" cy="17.5" r="2.5"/>
+                <circle cx="17.5" cy="15.5" r="2.5"/>
+                <path d="M8 17V5l12-2v12"/>
+              </svg>
+            </button>
+            <div id="summary-counter" class="count ml-auto text-gray-400 text-xs font-semibold">0/500</div>
+          </div>
+          <!-- submit button -->
+          <div class="buttons flex">
+            <button type="submit"
+                    class="border border-violety rounded border-2 cursor-pointer text-gray-800 px-4 ml-2 ">
+              Publish
+            </button>
+          </div>
+
+
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+
+          <!--TODO: style - comes from journey model fileextensionvalidator-->
+          {% for values in form.errors.values %}
+            {{ values }}
+          {% endfor %}
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function fileChange(event) {
+      let targetElement;
+      if (event.target.id == "imageField") {
+        targetElement = document.getElementById("picture-icon")
+      } else if (event.target.id == "audioField") {
+        console.log('here')
+        targetElement = document.getElementById("audio-icon")
+      } else {
+        targetElement = null
+      }
+
+      if (!targetElement) return
+
+      if (event.target.value) {
+        if (targetElement.classList.contains("bg-white")) {
+          targetElement.classList.remove("bg-white")
+        }
+        targetElement.classList.add("bg-green-300");
+      } else {
+        if (targetElement.classList.contains("bg-green-300")) {
+          targetElement.classList.remove("bg-green-300")
+        }
+        targetElement.classList.add("bg-white");
+      }
+    }
+
+    function updateCharacterCount(event) {
+      document.getElementById("summary-counter").innerText = `${event.target.value.length}/500`
+
+    }
+  </script>
+
+
+{% endblock %}
