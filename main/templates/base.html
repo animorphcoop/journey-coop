@@ -26,7 +26,7 @@
 
 <div class="max-w-3xl m-auto">
     <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-    <div id="app" x-on:layerchange="layerData=getLayerData($event);"
+    <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
     class="flex flex-col" x-data="{ next: '', logged: false}">
     <div x-init=" console.log(layerData);"></div>
         {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
@@ -53,9 +53,11 @@
 
 </style>
 <script>
+{% comment %}
     document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
+{% endcomment %}
 
 </script>
 

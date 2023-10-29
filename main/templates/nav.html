@@ -15,8 +15,22 @@
 
   <div class="flex items-center ml-4">
 
-    <button id="logout-button"
-            class="bg-greyish rounded boarder border-black border-2 p-2">
+
+    {% comment %}HTMX section{% endcomment %}
+    <div
+      hx-get="{% url 'get_logout' %}"
+      hx-trigger="logged_in from:body"
+      hx-target="#logout-container">
+    </div>
+    <div id="logout-container">
+
+    </div>
+
+    {% comment %}full page refresh fallback where default csrf token is used{% endcomment %}
+    {% if user.is_authenticated %}
+      <div>
+        <button id="logout-button"
+                class="bg-greyish rounded boarder border-black border-2 p-2">
                     <span hx-post="{% url 'logout' %}"
                           hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                           hx-target="#journey-overlay"
@@ -24,8 +38,9 @@
                     >
                         Logout
                     </span>
-    </button>
-
+        </button>
+      </div>
+    {% endif %}
 
 
     <button id="login-button"

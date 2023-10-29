@@ -1,0 +1,14 @@
+   <div>
+     <input id='mycsrf' type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    <button id="logout-button"
+            class="bg-greyish rounded boarder border-black border-2 p-2">
+                    <span hx-post="{% url 'logout' %}"
+                          hx-headers='{"X-CSRFToken": "{{ new_csrf }}"}'
+                          hx-target="#journey-overlay"
+                          class="text-black-500 hover:text-blue-800 cursor-pointer"
+                    >
+                        Logout
+                    </span>
+    </button>
+   </div>

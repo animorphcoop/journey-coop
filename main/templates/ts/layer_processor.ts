@@ -18,12 +18,31 @@ function getLayerData(event: CustomEvent) {
             dataToReturn = initialiseNicknameView()
         }
 
+    } else if (currentState == 'login') {
+        if (nextState == 'landing') {
+            loggedInNav()
+            dataToReturn = toggleOverlayEvent()
+
+        }
     } else if (currentState == 'nickname') {
         if (nextState == 'landing') {
-            dataToReturn = initialiseLoggedLandingView()
+            dataToReturn = loggedInNav()
+
+        }
+    } else if (currentState == 'loggedout') {
+        if (nextState == 'loggedin') {
+            dataToReturn = loggedInNav()
 
         }
     }
+
+    else if (currentState == 'loggedin') {
+        if (nextState == 'loggedout') {
+            dataToReturn = loggedOutNav()
+
+        }
+    }
+
 
     //TODO: trigger additional processing logic
     return dataToReturn
@@ -51,8 +70,8 @@ function initialiseNicknameView() {
     return 'OK'
 }
 
-function initialiseLoggedLandingView() {
 
+function loggedInNav() {
     let loginButton = (document.getElementById('login-button'))
     if (loginButton) {
         if (!loginButton.classList.contains('hidden')) {
@@ -66,8 +85,23 @@ function initialiseLoggedLandingView() {
             logoutButton.classList.remove('hidden');
         }
     }
+    return 'OK'
+}
 
+function loggedOutNav() {
+    let loginButton = (document.getElementById('login-button'))
+    if (loginButton) {
+        if (loginButton.classList.contains('hidden')) {
+            loginButton.classList.remove('hidden');
+        }
+    }
 
+    let logoutButton = (document.getElementById('logout-button'))
+    if (logoutButton) {
+        if (!logoutButton.classList.contains('hidden')) {
+            logoutButton.classList.add('hidden');
+        }
+    }
     return 'OK'
 }
 
@@ -85,5 +119,16 @@ function layerEventTrigger(currentLayer: string, previousLayer: string) {
         )
     }
 }
+
+function toggleOverlayEvent() {
+    let appContainer = document.getElementById('app')
+    if (appContainer) {
+        appContainer.dispatchEvent(
+            new Event('toggleoverlay', {})
+        )
+    }
+    return 'OK'
+}
+
 
 export {getLayerData, layerEventTrigger}

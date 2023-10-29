@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 
 from .models import Journey, Response, User
 from django.contrib import messages
+from django.middleware.csrf import rotate_token
 
 
 def landing(request):
@@ -54,22 +55,38 @@ class UserLogin(LoginView):
         auth_login(self.request, form.get_user())
 
         if str(form.get_user()) == str(form.get_user().email):
-            print('triggering nickname')
-            return render(self.request, "partials/nickname_trigger.html")
+            response = render(self.request, "partials/nickname_trigger.html")
         else:
-            return render(self.request, "partials/overlay_end.html")
+            response = HttpResponse("<script>layerEventTrigger('login', 'landing');</script>")
+
+        response['HX-Trigger'] = 'logged_in'
+        return response
 
     def form_invalid(self, form):
         context = {'form': form}
         return render(self.request, "login.html", context)
 
 
+
+# Need to rotate CSRF token and pass it to logout button for it to work
+def get_logout(request):
+    rotate_token(request)
+    print(request.META["CSRF_COOKIE"])
+    context = {
+        'new_csrf': request.META["CSRF_COOKIE"]
+    }
+    return render(request, "partials/logout_button.html", context)
+
+
+
 class UserLogout(LogoutView):
     template_name = "logout.html"
 
     def post(self, request, *args, **kwargs):
+
         auth_logout(request)
-        return render(self.request, "nav.html")
+        # return render(self.request, "nav.html")
+        return HttpResponse("<script>layerEventTrigger('loggedin', 'loggedout');</script>")
 
 
 class UserReset(PasswordResetView):
@@ -103,7 +120,8 @@ class UserNickname(UpdateView):
         self.object = form.save(commit=False)
 
         self.object.save()
-        return render(self.request, "partials/overlay_end.html")
+        # return render(self.request, "partials/overlay_end.html")
+        return HttpResponse("<script>layerEventTrigger('nickname', 'landing');</script>")
 
 
 # source template in contrib/admin/templates/registration

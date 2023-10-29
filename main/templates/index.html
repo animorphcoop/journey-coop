@@ -18,7 +18,6 @@
           & discuss stories about joining co&#8209;operatives.
         </p>
       </div>
-      {% comment %}saveMyReflectUrl(`journeys/'){% endcomment %}
 
 
       <div>
@@ -48,11 +47,16 @@
       </button>
     </div>
 
-  {% comment %} In case the user does not have nickname and country set yet and reloaded the page{% endcomment %}
+  {% comment %}logic to execute if full refresh occurs{% endcomment %}
   {% if user.is_authenticated %}
+    {% comment %}flip the nav {% endcomment %}
+    <div x-init="layerEventTrigger('loggedout', 'loggedin');"></div>
+
+    {% comment %} In case the user does not have nickname and country set yet and reloaded the page{% endcomment %}
     {% if not user.nickname %}
       {% include 'partials/nickname_trigger.html' %}
       {% endif %}
+
   {% endif %}
 
   </div>
