@@ -57,7 +57,7 @@ class UserLogin(LoginView):
         if str(form.get_user()) == str(form.get_user().email):
             response = render(self.request, "partials/nickname_trigger.html")
         else:
-            response = HttpResponse("<script>layerEventTrigger('login', 'landing');</script>")
+            response = HttpResponse("<script>setTimeout(()=>{layerEventTrigger('login', 'landing');}, 200)</script>")
         response['HX-Trigger'] = 'logged_in'
         return response
 

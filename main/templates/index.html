@@ -53,7 +53,7 @@
     <div x-init="layerEventTrigger('loggedout', 'loggedin');"></div>
 
     {% comment %} In case the user does not have nickname and country set yet and reloaded the page{% endcomment %}
-    {% if user.nickname == user.email %}
+    {% if not user.nickname %}
       {% include 'partials/nickname_trigger.html' %}
     {% endif %}
 

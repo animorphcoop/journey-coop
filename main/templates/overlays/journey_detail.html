@@ -2,60 +2,62 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <!-- This is a white spacer <div class="bg-white h-3"></div>-->
+  <!-- This is a white spacer <div class="bg-white h-3"></div>-->
 
-    <div class="bg-grey w-full px-2">
-            <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">{{ journey.title }}</h4>
-            <span class="inline-block  mb-4">by {{ journey.author }} from  <img src="{{ journey.author.country.flag }}"
-                                                                          class="inline max-w-sm"></span>
-
-
-
-        {% include 'partials/journey_image.html' with journey=journey %}
-
-        <div class="">
-            <div class="font-light py-4">{{ journey.summary }}</div>
-        </div>
-
-        {% include 'partials/journey_audio.html' with journey=journey %}
-
-    </div>
-    <div class="my-4 w-full">
+  <div class="bg-grey w-full px-2">
+    <h4 class="text-2xl md:text-3xl font-inter font-semibold leading-normal text-gray-800 mb-4">{{ journey.title }}</h4>
+    <span class="inline-block  mb-4">by {{ journey.author }} from  <img src="{{ journey.author.country.flag }}"
+                                                                        class="inline max-w-sm"></span>
 
 
-        <div class="grid grid-cols-1">
-            {% if responses.count > 0 %}
-                <div class="ml-2 text-xl">Responses</div>
-            {% endif %}
+    {% include 'partials/journey_image.html' with journey=journey %}
 
-            <div id="responses">
-                {% include 'partials/journey_responses.html' with responses=responses %}
-
-            </div>
-        </div>
-
+    <div class="">
+      <div class="font-light py-4">{{ journey.summary }}</div>
     </div>
 
+    {% include 'partials/journey_audio.html' with journey=journey %}
 
-    {% if user.is_authenticated %}
-        <!--Response form -->
-        <div class="w-full">
-            <form x-on:htmx:after-swap.window="console.log('clear response field after post')"
-                  hx-post="{% url 'journey_respond' journey.slug %}"
-                  hx-target="#responses"
-                  hx-swap="innerHTML"
-            >
+  </div>
+  <div class="my-4 w-full">
 
-                {% csrf_token %}
-                {% render_field form.text id="response-field" class="w-full" %}
 
-                <div class="my-4">
-            {% include 'partials/button_submit.html' with text='Respond' %}
+    <div class="grid grid-cols-1">
+      {% if responses.count > 0 %}
+        <div class="text-xl">Responses</div>
 
-                </div>
+      {% else %}
+        <div class="text-xl">Be first to respond!</div>
+      {% endif %}
 
-            </form>
+      <div id="responses">
+        {% include 'partials/journey_responses.html' with responses=responses %}
+
+      </div>
+    </div>
+
+  </div>
+
+
+  {% if user.is_authenticated %}
+    <!--Response form -->
+    <div class="w-full">
+      <form x-on:htmx:after-swap.window="console.log('clear response field after post')"
+            hx-post="{% url 'journey_respond' journey.slug %}"
+            hx-target="#responses"
+            hx-swap="innerHTML"
+      >
+
+        {% csrf_token %}
+        {% render_field form.text id="response-field" class="w-full" %}
+
+        <div class="my-4">
+          {% include 'partials/button_submit.html' with text='Post' call="layerEventTrigger('journey', 'response');" %}
 
         </div>
-    {% endif %}
+
+      </form>
+
+    </div>
+  {% endif %}
 {% endblock %}

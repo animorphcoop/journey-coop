@@ -34,11 +34,14 @@ function getLayerData(event: CustomEvent) {
             dataToReturn = loggedInNav()
 
         }
-    }
-
-    else if (currentState == 'loggedin') {
+    } else if (currentState == 'loggedin') {
         if (nextState == 'loggedout') {
             dataToReturn = loggedOutNav()
+
+        }
+    } else if (currentState == 'journey') {
+        if (nextState == 'response') {
+            clearResponseInput()
 
         }
     }
@@ -72,6 +75,7 @@ function initialiseNicknameView() {
 
 
 function loggedInNav() {
+    console.log('imflipin')
     let loginButton = (document.getElementById('login-button'))
     if (loginButton) {
         if (!loginButton.classList.contains('hidden')) {
@@ -103,6 +107,17 @@ function loggedOutNav() {
         }
     }
     return 'OK'
+}
+
+function clearResponseInput() {
+    const responseInput = (<HTMLInputElement>document.getElementById('response-field'))
+    if (responseInput) {
+        setTimeout(()=>{
+            responseInput.value = ""
+        }, 250)
+
+    }
+
 }
 
 

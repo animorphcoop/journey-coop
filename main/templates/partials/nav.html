@@ -16,7 +16,7 @@
   <div class="flex items-center ml-4">
 
 
-    {% comment %}HTMX section{% endcomment %}
+    {% comment %}HTMX section on successful login{% endcomment %}
     <div
       hx-get="{% url 'get_logout' %}"
       hx-trigger="logged_in from:body"
@@ -26,7 +26,7 @@
 
     </div>
 
-    {% comment %}full page refresh fallback where default csrf token is used{% endcomment %}
+    {% comment %}full page refresh fallback of above where default csrf token is used{% endcomment %}
     {% if user.is_authenticated %}
       <div>
         <button id="logout-button"
