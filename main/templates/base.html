@@ -1,3 +1,4 @@
+{% load custom_tags %}
 {% load static %}
 {% load django_vite %}
 
@@ -15,16 +16,19 @@
         {# Override this in templates to add extra stylesheets #}
     {% endblock %}
 
+    {% vite_hmr_client %}
    {# Base script - pulls in all libraries and global stylesheets  #}
     {% vite_asset 'main/templates/ts/base.ts' %}
 
 
 </head>
-<body x-data="{overlay: false }" class="bg-greyish">
+<body x-data="{overlay: false, layerData: ''}" class="bg-greyish">
 
 <div class="max-w-3xl m-auto">
     <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-    <div id="app" class="flex flex-col" x-data="{ next: '', logged: false}">
+    <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
+    class="flex flex-col" x-data="{ next: '', logged: false}">
+    <div x-init=" console.log(layerData);"></div>
         {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
         {% if messages %}
             {% include "partials/feedback_banner_message.html" with messages=messages %}
@@ -42,15 +46,18 @@
     </div>
 </div>
 
+{% journey_vite_prevent_unstyled_flash %}
 
 </body>
 <style>
 
 </style>
 <script>
+{% comment %}
     document.body.addEventListener('htmx:configRequest', (event) => {
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
+{% endcomment %}
 
 </script>
 

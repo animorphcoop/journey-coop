@@ -6,12 +6,12 @@ import Alpine from 'alpinejs'
 
 import '@/static/css/main.css'
 import '@/static/css/tailwind.css'
+import {getLayerData, layerEventTrigger} from "./layer_processor.ts"
 
+import {expose} from "./utils.ts"
 
+expose({htmx, Alpine, getLayerData, layerEventTrigger})
 
-import { expose } from "./utils.ts"
-
-expose({ htmx, Alpine })
 
 
 /**

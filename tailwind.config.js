@@ -17,19 +17,19 @@ export default {
          */
 
         /*  Templates within theme app (<tailwind_app_name>/templates), e.g. base.html. */
-        './templates/**/*.html',
+        'main/templates/base.html',
 
         /*
          * Main templates directory of the project (BASE_DIR/templates).
          * Adjust the following line to match your project structure.
          */
-        './main/templates/**/*.html',
+        './main/templates/*.html',
 
         /*
          * Templates in other django apps (BASE_DIR/<any_app_name>/templates).
          * Adjust the following line to match your project structure.
          */
-        '../../**/templates/**/*.html',
+        './main/templates/**/*.html',
 
         /**
          * JS: If you use Tailwind CSS in JavaScript, uncomment the following lines and make sure
@@ -49,14 +49,14 @@ export default {
     theme: {
         extend: {
             colors: {
-                main: { 
+                main: {
                     DEFAULT: '#111827'
                 },//add tailwind colors here
                 greyish: {
-                    DEFAULT: '#e9efe2' 
+                    DEFAULT: '#e9efe2'
                 },
                 grey: {
-                    DEFAULT: '#F1F1F1' 
+                    DEFAULT: '#F1F1F1'
                 },
                 limey: {
                     DEFAULT: '#dcf6a4'
@@ -82,7 +82,6 @@ export default {
          */
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
-        require('@tailwindcss/line-clamp'),
         require('@tailwindcss/aspect-ratio'),
     ],
 }

@@ -14,6 +14,7 @@ htmx_urlpatterns = [
     path('signup/', views.UserCreate.as_view(), name="signup"),
     path('login/', views.UserLogin.as_view(), name="login"),
     path('nickname/<pk>/', views.UserNickname.as_view(), name="nickname"),
+    path('get_logout/', views.get_logout, name="get_logout"),
     path('logout/', views.UserLogout.as_view(), name="logout"),
     path('password_reset/', views.UserReset.as_view(), name='password_reset'),
     path('start/', views.CreateJourney.as_view(), name="start"),

@@ -17,7 +17,6 @@ import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 
 MAIN_DIR = os.path.join(BASE_DIR, "main")
 
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
 
     'django_htmx',
     'widget_tweaks',
-
 
 ]
 
@@ -154,7 +152,6 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # the rest imported from local
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
-# run dev to be fixed and then split between prod and dev
-DJANGO_VITE_DEV_MODE = False
+
 
 

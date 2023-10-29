@@ -10,8 +10,8 @@ brings people into the co-op ecosystem.
 
 ## What is it made of?
 
-Server-Side-Rendered web-app comprising of Django, HTMX, Alpine.js and Tailwind. The frontend (including Typescript
-bundled with Vite.
+Server-Side-Rendered web-app comprising of [Django](https://www.djangoproject.com/), [HTMX](https://htmx.org/), [Alpine.js](https://alpinejs.dev/) and [Tailwind CSS](https://tailwindcss.com/). The frontend (including Typescript
+bundled with [Vite](https://github.com/MrBin99/django-vite/tree/master).
 
 ## What does it facilitate?
 
@@ -109,22 +109,15 @@ python manage.py createsuperuser
 
 ### Vite
 
-Before running Django, open another terminal window to set up Vite to bundle frontend
+Before running Django, open another terminal window to set up Vite to bundle frontend static assets
 
 ```bash
 npm install
 ```
 
-~~For running it in development (as described in vite.config.js)~~
+For running it in development (as described in vite.config.js)
 
-Give [the issue with reload loop](https://github.com/animorphcoop/journey-coop/issues/7), for now replace the standard
-development command `npm run dev` with entr:
-
-```bash
-find main/templates | entr -s 'npm run build'
-```
-
-4. Now run SSR app (continue Vite/entr process in parallel if needed but if it's building might not need to run)
+4. Now run SSR app (continue Vite process in parallel)
 
 ```bash
 python manage.py runserver
@@ -140,6 +133,7 @@ with uWSGI and Caddy on Debian
 2. Follow installation steps above (from the start, install requirements.txt, add local.py with secrets, make sure there
    is a match with PostgreSQL credentials)
 
+3. Build static assets
 ```bash
 npm run build
 
@@ -147,7 +141,7 @@ npm run build
 3.Export production settings
 
 ```bash
-export DJANGO_SETTINGS_MODULE='journey.production'
+export DJANGO_SETTINGS_MODULE='journey.prod'
 ```
 
 4. Collect static files
