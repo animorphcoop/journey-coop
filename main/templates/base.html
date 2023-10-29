@@ -5,45 +5,57 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Journey to Co-op</title>
+  <meta charset="UTF-8">
+  <title>Journey to Co-op</title>
 
 
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-    {% endblock %}
+  {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+  {% endblock %}
 
-    {% vite_hmr_client %}
-   {# Base script - pulls in all libraries and global stylesheets  #}
-    {% vite_asset 'main/templates/ts/base.ts' %}
+  {% vite_hmr_client %}
+  {# Base script - pulls in all libraries and global stylesheets  #}
+  {% vite_asset 'main/templates/ts/base.ts' %}
 
 
 </head>
 <body x-data="{overlay: false, layerData: ''}" class="bg-greyish">
 
 <div class="max-w-3xl m-auto">
-    <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
-    <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
-    class="flex flex-col" x-data="{ next: '', logged: false}">
+  <!--the viewport of the content has been narrowed down for mobile-first development simplicity w-[480px] -->
+  <div id="app" x-on:layerchange="layerData=getLayerData($event);" x-on:toggleoverlay="overlay=!overlay"
+       class="flex flex-col" x-data="{ next: '', logged: false}">
     <div x-init=" console.log(layerData);"></div>
-        {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
-        {% if messages %}
-            {% include "partials/feedback_banner_message.html" with messages=messages %}
-        {% endif %}
+    {% comment %}currently used only after password reset due to security concerns of leaking the token {% endcomment %}
+    {% if messages %}
+      {% include "partials/feedback_banner_message.html" with messages=messages %}
+    {% endif %}
 
-        <div :class="{ 'hidden': overlay == true}"
-             x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
-            {% include 'nav.html' %}
-        </div>
-
-
-        {% block content %}
-
-        {% endblock %}
+    <div :class="{ 'hidden': overlay == true}"
+         x-init="$watch('overlay', value => {if (!overlay && !logged && next != ''){document.getElementById('start-button').click(); next=''}})">
+      {% include 'nav.html' %}
     </div>
+
+
+    {% block content %}
+
+    {% endblock %}
+
+    <footer class="bg-white">
+      <div class="flex items-center px-2 md:8 py-8 mx-auto content-center">
+        <p class="text-sm text-gray-500 mx-auto">Made open with 🩶 feedback & contribute via
+          <a href="https://github.com/animorphcoop/journey-coop/issues"><img class="ml-2 lg:ml-4 w-6 md:w-8 h-auto inline" src="{% static 'images/github_mark.png' %}"></a>
+        </p>
+
+
+      </div>
+    </footer>
+
+
+  </div>
 </div>
 
 {% journey_vite_prevent_unstyled_flash %}
@@ -53,11 +65,11 @@
 
 </style>
 <script>
-{% comment %}
-    document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-    })
-{% endcomment %}
+  {% comment %}
+      document.body.addEventListener('htmx:configRequest', (event) => {
+          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+  {% endcomment %}
 
 </script>
 
